@@ -47,6 +47,13 @@ def newCatalog():
     return catalog
 
 # Funciones para agregar informacion al catalogo
+def addArtist(catalog, Artist):
+    lt.addLast(catalog['Artists'], Artist)
+def addArtwork(catalog, Artwork):
+    lt.addLast(catalog['Artworks'], Artwork)
+
+
+
 
 # Funciones para creacion de datos
 
