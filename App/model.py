@@ -36,6 +36,15 @@ los mismos.
 """
 
 # Construccion de modelos
+def newCatalog():
+    catalog = {'Artists': None,
+               'Artworks': None,
+               }
+
+    catalog['Artists'] = lt.newList('SINGLE_LINKED', cmpfunction=none)
+    catalog['Artworks'] = lt.newList('SINGLE_LINKED', cmpfunction=none)
+
+    return catalog
 
 # Funciones para agregar informacion al catalogo
 
