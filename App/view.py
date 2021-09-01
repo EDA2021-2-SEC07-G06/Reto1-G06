@@ -56,12 +56,8 @@ while True:
         print("Cargando información de los archivos ....")
         catalog = controller.initCatalog()
         controller.loadData(catalog)
-        print('Libros cargados: ' + str(lt.size(catalog['books'])))
-        print('Autores cargados: ' + str(lt.size(catalog['authors'])))
-        print('Géneros cargados: ' + str(lt.size(catalog['tags'])))
-        print('Asociación de Géneros a Libros cargados: ' +
-              str(lt.size(catalog['book_tags'])))
-
+        print('Libros cargados: ' + str(lt.size(catalog['Artists'])))
+        print('Autores cargados: ' + str(lt.size(catalog['Artworks'])))
     elif int(inputs[0]) == 2:
         pass
 
