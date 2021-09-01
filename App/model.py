@@ -41,8 +41,8 @@ def newCatalog():
                'Artworks': None,
                }
 
-    catalog['Artists'] = lt.newList('SINGLE_LINKED', cmpfunction=none)
-    catalog['Artworks'] = lt.newList('SINGLE_LINKED', cmpfunction=none)
+    catalog['Artists'] = lt.newList('SINGLE_LINKED', cmpfunction=None)
+    catalog['Artworks'] = lt.newList('SINGLE_LINKED', cmpfunction=None)
 
     return catalog
 
