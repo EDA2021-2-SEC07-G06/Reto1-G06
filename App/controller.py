@@ -51,7 +51,7 @@ def loadArtworks(catalog):
     Artworksfile = cf.data_dir + 'Artworks-utf8-small.csv'
     input_file = csv.DictReader(open(Artworksfile, encoding='utf-8'))
     for Artwork in input_file:
-        model.addArtist(catalog, Artwork)
+        model.addArtwork(catalog, Artwork)
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
