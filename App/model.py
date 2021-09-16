@@ -28,6 +28,8 @@
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
+import datetime
+from DISClib.Utils import error as error
 assert cf
 
 """
@@ -51,8 +53,13 @@ def addArtist(catalog, Artist):
     lt.addLast(catalog['Artists'], Artist)
 def addArtwork(catalog, Artwork):
     lt.addLast(catalog['Artworks'], Artwork)
-
-
+def cmpArtworkByDateAcquired(artwork1,artwork2):
+    return(datetime.date(artwork1['DateAcquired'])< datetime.date(artwork2['DateAcquired']))
+def subList(lst, pos, numelem):
+    try:
+        return lt.subList(lst, pos, numelem)
+    except Exception as exp:
+        error.reraise(exp, 'List->subList: ')
 
 
 # Funciones para creacion de datos
