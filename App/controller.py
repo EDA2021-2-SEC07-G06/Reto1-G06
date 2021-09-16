@@ -52,7 +52,19 @@ def loadArtworks(catalog):
     input_file = csv.DictReader(open(Artworksfile, encoding='utf-8'))
     for Artwork in input_file:
         model.addArtwork(catalog, Artwork)
+def loadsublist(lst,pos,numelem):
+    return model.sublist(lst,pos,numelem)
+def callcmp(artwork1,artwork2):
+    return model.cmpArtworkByDateAcquired(artwork1,artwork2)
 
+def sortlistinsertion(catalog,cmpfunction):
+    model.insertionsort(catalog,cmpfunction)
+def sortlistshell(catalog,cmpfunction):
+    model.shellsort(catalog,cmpfunction)
+def sortlistquick(catalog,cmpfunction):
+    model.quicksort(catalog,cmpfunction)
+def sortlistmerge(catalog,cmpfunction):
+    model.mergesort(catalog,cmpfunction)
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
