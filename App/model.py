@@ -36,7 +36,7 @@ los mismos.
 """
 
 # Construccion de modelos
-def newCatalog():
+def newCatalogSingleLinked():
     catalog = {'Artists': None,
                'Artworks': None,
                }
@@ -46,6 +46,15 @@ def newCatalog():
 
     return catalog
 
+def newCatalogArrayList():
+    catalog = {'Artists': None,
+               'Artworks': None,
+               }
+
+    catalog['Artists'] = lt.newList('ARRAY_LIST', cmpfunction=None)
+    catalog['Artworks'] = lt.newList('ARRAY_LIST', cmpfunction=None)
+
+    return catalog
 # Funciones para agregar informacion al catalogo
 def addArtist(catalog, Artist):
     lt.addLast(catalog['Artists'], Artist)

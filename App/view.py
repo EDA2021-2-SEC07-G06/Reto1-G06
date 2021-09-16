@@ -20,6 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+from App.controller import initCatalogArrayList, initCatalogSingleLinked
 import config as cf
 import sys
 import controller
@@ -54,7 +55,11 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-        catalog = controller.initCatalog()
+        catalog_type=int(input("Presiona 1 para cargar la lista con tipo Linked List y 2 para cargar la lista con tipo Array List."))
+        if catalog_type==1:
+            catalog = controller.initCatalogSingleLinked()
+        elif catalog_type==2:
+            catalog = controller.initCatalogArrayList()
         controller.loadData(catalog)
         print('Artistas cargados: ' + str(lt.size(catalog['Artists'])))
         print('obras cargadas: ' + str(lt.size(catalog['Artworks'])))
