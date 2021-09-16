@@ -20,7 +20,6 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
-from App.controller import initCatalogArrayList, initCatalogSingleLinked
 import config as cf
 import sys
 import controller
@@ -64,18 +63,19 @@ while True:
         print('Artistas cargados: ' + str(lt.size(catalog['Artists'])))
         print('obras cargadas: ' + str(lt.size(catalog['Artworks'])))
     elif int(inputs[0]) == 2:
+        artworklist=catalog['Artworks']
         sorttype=int(input('Para ordenamiento por insertionsort ingrese 1, por shellsort ingrese 2, por quicksort ingrese 3 y por mergesort ingrese 4'))
         cmpfunction=controller.callcmp
         if sorttype==1:
-            ordlist=controller.sortlistinsertion(catalog, cmpfunction)
+            ordlist=controller.sortlistinsertion(artworklist, cmpfunction)
         elif sorttype==2:
-            ordlist=controller.sortlistshell(catalog, cmpfunction)
+            ordlist=controller.sortlistshell(artworklist, cmpfunction)
         elif sorttype==3:
-            ordlist=controller.sortlistquick(catalog, cmpfunction)
+            ordlist=controller.sortlistquick(artworklist, cmpfunction)
         elif sorttype==4:
-            ordlist=controller.sortlistmerge(catalog, cmpfunction)
-        size=int(input('ingrese el tamaño de la muestra que desea'))
-        subordlist=controller.loadsublist(ordlist,0,size)
+            ordlist=controller.sortlistmerge(artworklist, cmpfunction)
+        order=int(input('ingrese el tamaño de la muestra que desea'))
+        subordlist=controller.loadsublist(ordlist,0,order)
         print(subordlist)
     else:
         sys.exit(0)

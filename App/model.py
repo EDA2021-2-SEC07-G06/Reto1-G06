@@ -28,7 +28,7 @@
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
-import datetime
+from datetime import datetime
 from DISClib.Utils import error as error
 assert cf
 
@@ -63,7 +63,7 @@ def addArtist(catalog, Artist):
 def addArtwork(catalog, Artwork):
     lt.addLast(catalog['Artworks'], Artwork)
 def cmpArtworkByDateAcquired(artwork1,artwork2):
-    return(datetime.date(artwork1['DateAcquired'])< datetime.date(artwork2['DateAcquired']))
+    return(datetime.strptime(artwork1['DateAcquired'],'%Y-%m-%d')< datetime.strptime(artwork2['DateAcquired'],'%Y-%m-%d'))
 def subList(lst, pos, numelem):
     try:
         return lt.subList(lst, pos, numelem)
