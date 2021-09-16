@@ -63,16 +63,16 @@ def addArtist(catalog, Artist):
 def addArtwork(catalog, Artwork):
     lt.addLast(catalog['Artworks'], Artwork)
 def cmpArtworkByDateAcquired(artwork1,artwork2):
-    if artwork1 and artwork2 !=str(''):
+    if artwork1['DateAcquired'] and artwork2['DateAcquired'] !=str(''):
         condition=(datetime.strptime(artwork1['DateAcquired'],'%Y-%m-%d')< datetime.strptime(artwork2['DateAcquired'],'%Y-%m-%d'))
     else:
-        pass
+        condition=False
     return condition
-def subList(lst, pos, numelem):
+def sublist(lst, pos, numelem):
     try:
         return lt.subList(lst, pos, numelem)
     except Exception as exp:
-        error.reraise(exp, 'List->subList: ')
+        error.reraise(exp, 'List->sublist: ')
 def insertionsort(lst, cmpfunction):
     size = lt.size(lst)
     pos1 = 1

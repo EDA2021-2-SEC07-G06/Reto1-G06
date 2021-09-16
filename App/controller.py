@@ -61,13 +61,13 @@ def callcmp(artwork1,artwork2):
     return model.cmpArtworkByDateAcquired(artwork1,artwork2)
 
 def sortlistinsertion(catalog,cmpfunction):
-    model.insertionsort(catalog,cmpfunction)
+    return model.insertionsort(catalog,cmpfunction)
 def sortlistshell(catalog,cmpfunction):
-    model.shellsort(catalog,cmpfunction)
+    return model.shellsort(catalog,cmpfunction)
 def sortlistquick(catalog,cmpfunction):
-    model.quicksort(catalog,cmpfunction)
+    return model.quicksort(catalog,cmpfunction)
 def sortlistmerge(catalog,cmpfunction):
-    model.mergesort(catalog,cmpfunction)
+    return model.mergesort(catalog,cmpfunction)
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo

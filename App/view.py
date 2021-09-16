@@ -75,7 +75,10 @@ while True:
         elif sorttype==4:
             ordlist=controller.sortlistmerge(artworklist, cmpfunction)
         order=int(input('ingrese el tamaño de la muestra que desea'))
-        subordlist=controller.loadsublist(ordlist,0,order)
-        print(subordlist)
+        if order < lt.size(catalog['Artworks']):
+            subordlist=controller.loadsublist(ordlist,0,order)
+            print(subordlist)
+        else:
+            print('tamaño de lista no disponible')
     else:
         sys.exit(0)
