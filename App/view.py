@@ -53,7 +53,7 @@ Menu principal
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
-if int(inputs[0]) == 1:
+    if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
         catalog_type=int(input("Presiona 1 para cargar la lista con tipo Linked List y 2 para cargar la lista con tipo Array List."))
         if catalog_type==1:
