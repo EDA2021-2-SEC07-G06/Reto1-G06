@@ -64,8 +64,18 @@ while True:
         print('Artistas cargados: ' + str(lt.size(catalog['Artists'])))
         print('obras cargadas: ' + str(lt.size(catalog['Artworks'])))
     elif int(inputs[0]) == 2:
-        pass
-
+        sorttype=int(input('Para ordenamiento por insertionsort ingrese 1, por shellsort ingrese 2, por quicksort ingrese 3 y por mergesort ingrese 4'))
+        cmpfunction=controller.callcmp
+        if sorttype==1:
+            ordlist=controller.sortlistinsertion(catalog, cmpfunction)
+        elif sorttype==2:
+            ordlist=controller.sortlistshell(catalog, cmpfunction)
+        elif sorttype==3:
+            ordlist=controller.sortlistquick(catalog, cmpfunction)
+        elif sorttype==4:
+            ordlist=controller.sortlistmerge(catalog, cmpfunction)
+        size=int(input('ingrese el tamaño de la muestra que desea'))
+        subordlist=controller.loadsublist(ordlist,0,size)
+        print(subordlist)
     else:
         sys.exit(0)
-sys.exit(0)
