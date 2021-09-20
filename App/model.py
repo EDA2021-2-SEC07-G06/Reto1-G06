@@ -25,6 +25,7 @@
  """
 
 
+from DISClib.DataStructures.arraylist import addFirst
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
@@ -43,8 +44,8 @@ def newCatalogSingleLinked():
                'Artworks': None,
                }
 
-    catalog['Artists'] = lt.newList('SINGLE_LINKED', cmpfunction=None)
-    catalog['Artworks'] = lt.newList('SINGLE_LINKED', cmpfunction=None)
+    catalog['Artists'] = lt.newList('ARRAY_LIST', cmpfunction=None)
+    catalog['Artworks'] = lt.newList('ARRAY_LIST', cmpfunction=None)
 
     return catalog
 
@@ -63,16 +64,45 @@ def addArtist(catalog, Artist):
 def addArtwork(catalog, Artwork):
     lt.addLast(catalog['Artworks'], Artwork)
 def cmpArtworkByDateAcquired(artwork1,artwork2):
+<<<<<<< HEAD
     if artwork1['DateAcquired'] and artwork2['DateAcquired'] !=str(''):
+=======
+    if artwork1['DateAcquired']!=str('') and artwork2['DateAcquired'] !=str(''):
+>>>>>>> Juanda
         condition=(datetime.strptime(artwork1['DateAcquired'],'%Y-%m-%d')< datetime.strptime(artwork2['DateAcquired'],'%Y-%m-%d'))
     else:
         condition=False
     return condition
+<<<<<<< HEAD
 def sublist(lst, pos, numelem):
     try:
         return lt.subList(lst, pos, numelem)
     except Exception as exp:
         error.reraise(exp, 'List->sublist: ')
+=======
+def subList(lst, pos, numelem):
+    try:
+        return lt.subList(lst, pos, numelem)
+    except Exception as exp:
+        error.reraise(exp, 'List->subList: ')
+def cmpdaterange(artwork,start,end):
+    return datetime.strptime(artwork['DateAcquired'],'%Y-%m-%d')>start and datetime.strptime(artwork['DateAcquired'],'%Y-%m-%d')<end
+def daterangelist(lst,cmp,start,end):
+    size=lt.size(lst)
+    newlist=lt.newList('ARRAY_LIST', cmpfunction=None)
+    for i in range(0,size):
+        artwork=lt.getElement(lst,i)
+        if cmp(artwork,start,end):
+            lt.addFirst(newlist,artwork)
+    return newlist
+def cleanordlist(catalog):
+    newlist=lt.newList('ARRAY_LIST',cmpfunction=None)
+    for i in range(0,lt.size(catalog)):
+        if catalog['elements'][i]['DateAcquired']!=(''):
+            lt.addLast(newlist,catalog['elements'][i])
+    return newlist
+
+>>>>>>> Juanda
 def insertionsort(lst, cmpfunction):
     size = lt.size(lst)
     pos1 = 1
