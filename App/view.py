@@ -60,7 +60,7 @@ while True:
         print('obras cargadas: ' + str(lt.size(catalog['Artworks'])))
     elif int(inputs[0]) == 2:
         artworkslist=catalog['Artworks']
-        size=lt.size(artworkslist)
+        print(artworkslist)
         sortcmp=controller.callcmp
         ordlist=controller.sortlistinsertion(artworkslist,sortcmp)
         print(ordlist)
