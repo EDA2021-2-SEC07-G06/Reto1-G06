@@ -59,25 +59,6 @@ while True:
         print('Artistas cargados: ' + str(lt.size(catalog['Artists'])))
         print('obras cargadas: ' + str(lt.size(catalog['Artworks'])))
     elif int(inputs[0]) == 2:
-<<<<<<< HEAD
-        artworklist=catalog['Artworks']
-        sorttype=int(input('Para ordenamiento por insertionsort ingrese 1, por shellsort ingrese 2, por quicksort ingrese 3 y por mergesort ingrese 4'))
-        cmpfunction=controller.callcmp
-        if sorttype==1:
-            ordlist=controller.sortlistinsertion(artworklist, cmpfunction)
-        elif sorttype==2:
-            ordlist=controller.sortlistshell(artworklist, cmpfunction)
-        elif sorttype==3:
-            ordlist=controller.sortlistquick(artworklist, cmpfunction)
-        elif sorttype==4:
-            ordlist=controller.sortlistmerge(artworklist, cmpfunction)
-        order=int(input('ingrese el tamaño de la muestra que desea'))
-        if order < lt.size(catalog['Artworks']):
-            subordlist=controller.loadsublist(ordlist,0,order)
-            print(subordlist)
-        else:
-            print('tamaño de lista no disponible')
-=======
         artworkslist=catalog['Artworks']
         sortcmp=controller.callcmp
         ordlist=controller.sortlistinsertion(artworkslist,sortcmp)
@@ -91,6 +72,5 @@ while True:
         rangelist=controller.calldaterangelist(cleanordlist,cmpfunction,startdate,enddate)
         for i in range(0,(lt.size(rangelist))):
             print(rangelist['elements'][i]['ObjectID'])
->>>>>>> Juanda
     else:
         sys.exit(0)

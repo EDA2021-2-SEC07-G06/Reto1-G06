@@ -86,11 +86,7 @@ def sortlistinsertion(catalog,cmpfunction):
 def sortlistshell(catalog,cmpfunction):
     return model.shellsort(catalog,cmpfunction)
 def sortlistquick(catalog,cmpfunction):
-<<<<<<< HEAD
-    return model.quicksort(catalog,cmpfunction)
-=======
     return model.sort(catalog,cmpfunction)
->>>>>>> Juanda
 def sortlistmerge(catalog,cmpfunction):
     return model.mergesort(catalog,cmpfunction)
 # Funciones de ordenamiento

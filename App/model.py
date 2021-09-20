@@ -64,22 +64,11 @@ def addArtist(catalog, Artist):
 def addArtwork(catalog, Artwork):
     lt.addLast(catalog['Artworks'], Artwork)
 def cmpArtworkByDateAcquired(artwork1,artwork2):
-<<<<<<< HEAD
-    if artwork1['DateAcquired'] and artwork2['DateAcquired'] !=str(''):
-=======
     if artwork1['DateAcquired']!=str('') and artwork2['DateAcquired'] !=str(''):
->>>>>>> Juanda
         condition=(datetime.strptime(artwork1['DateAcquired'],'%Y-%m-%d')< datetime.strptime(artwork2['DateAcquired'],'%Y-%m-%d'))
     else:
         condition=False
     return condition
-<<<<<<< HEAD
-def sublist(lst, pos, numelem):
-    try:
-        return lt.subList(lst, pos, numelem)
-    except Exception as exp:
-        error.reraise(exp, 'List->sublist: ')
-=======
 def subList(lst, pos, numelem):
     try:
         return lt.subList(lst, pos, numelem)
@@ -102,7 +91,6 @@ def cleanordlist(catalog):
             lt.addLast(newlist,catalog['elements'][i])
     return newlist
 
->>>>>>> Juanda
 def insertionsort(lst, cmpfunction):
     size = lt.size(lst)
     pos1 = 1
