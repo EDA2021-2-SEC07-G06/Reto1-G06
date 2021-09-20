@@ -60,12 +60,11 @@ while True:
         print('obras cargadas: ' + str(lt.size(catalog['Artworks'])))
     elif int(inputs[0]) == 2:
         startdate=str(input('Ingrese la fecha inicial '))
-        stardate=datetime.date(startdate)
-        enddate=datetime.date(input('Ingrese la fecha inicial '))
-        cmpfunction=controller.callcmp
-        ordlist=controller.sortlistquick(catalog, cmpfunction)
-        size=int(input('ingrese el tamaño de la muestra que desea'))
-        subordlist=controller.loadsublist(ordlist,0,size)
-        print(subordlist)
+        startdate=datetime.strptime(startdate,'%Y-m-d')
+        enddate=str(input('Ingrese la fecha final '))
+        enddate=datetime.strptime(enddate,'%Y-%m-%d')
+        cmpfunction=controller.calldaterangecmp
+        ordlist=controller.calldaterangelist(catalog['Artworks'],cmpfunction,startdate,enddate)
+        print(ordlist)
     else:
         sys.exit(0)

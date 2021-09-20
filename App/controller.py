@@ -46,7 +46,6 @@ def loadArtists(catalog):
     for Artist in input_file:
         model.addArtist(catalog, Artist)
 
-
 def loadArtworks(catalog):
     Artworksfile = cf.data_dir + 'Artworks-utf8-small.csv'
     input_file = csv.DictReader(open(Artworksfile, encoding='utf-8'))
@@ -56,7 +55,10 @@ def loadsublist(lst,pos,numelem):
     return model.sublist(lst,pos,numelem)
 def callcmp(artwork1,artwork2):
     return model.cmpArtworkByDateAcquired(artwork1,artwork2)
-
+def calldaterangecmp(artwork,start,end):
+    return model.cmpdaterange(artwork,start,end)
+def calldaterangelist(lst,cmp,start,end):
+    return model.daterangelist(lst,cmp,start,end)
 def sortlistinsertion(catalog,cmpfunction):
     model.insertionsort(catalog,cmpfunction)
 def sortlistshell(catalog,cmpfunction):

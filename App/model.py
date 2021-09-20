@@ -54,15 +54,30 @@ def addArtist(catalog, Artist):
 def addArtwork(catalog, Artwork):
     lt.addLast(catalog['Artworks'], Artwork)
 def cmpArtworkByDateAcquired(artwork1,artwork2):
-    return(datetime.date(artwork1['DateAcquired'])< datetime.date(artwork2['DateAcquired']))
+    if artwork1['DateAcquired']!=str('') and artwork2['DateAcquired'] !=str(''):
+        condition=(datetime.strptime(artwork1['DateAcquired'],'%Y-%m-%d')< datetime.strptime(artwork2['DateAcquired'],'%Y-%m-%d'))
+    else:
+        condition=False
+    return condition
 def subList(lst, pos, numelem):
     try:
         return lt.subList(lst, pos, numelem)
     except Exception as exp:
         error.reraise(exp, 'List->subList: ')
-#def date_range(lst,start,end):
-    #for i in range(lst.size()):
-        #if lst
+def cmpdaterange(artwork,start,end):
+    if start != ('') and end!=(''):
+        condition=artwork['DateAcquired']>start and artwork['DateAcquired']<end
+    else:
+        condition="False"
+    return condition
+def daterangelist(lst,cmp,start,end):
+    size=lst.size(lst)
+    newlist=lt.newList('ARRAY_LIST', cmpfunction=None)
+    for i in size:
+        artwork=lt.getElement(lst,i)
+        if cmp(artwork,start,end):
+            lt.addLast(newlist,artwork)
+    return newlist
 def insertionsort(lst, cmpfunction):
     size = lt.size(lst)
     pos1 = 1
