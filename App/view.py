@@ -54,12 +54,13 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
-        catalog = controller.initCatalog
+        catalog = controller.initCatalog()
         controller.loadData(catalog)
         print('Artistas cargados: ' + str(lt.size(catalog['Artists'])))
         print('obras cargadas: ' + str(lt.size(catalog['Artworks'])))
     elif int(inputs[0]) == 2:
-        startdate=datetime.date(input('Ingrese la fecha inicial '))
+        startdate=str(input('Ingrese la fecha inicial '))
+        stardate=datetime.date(startdate)
         enddate=datetime.date(input('Ingrese la fecha inicial '))
         cmpfunction=controller.callcmp
         ordlist=controller.sortlistquick(catalog, cmpfunction)
