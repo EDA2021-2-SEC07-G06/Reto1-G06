@@ -22,6 +22,7 @@
 
 import config as cf
 import sys
+import datetime
 import controller
 from DISClib.ADT import list as lt
 assert cf
@@ -63,16 +64,10 @@ while True:
         print('Artistas cargados: ' + str(lt.size(catalog['Artists'])))
         print('obras cargadas: ' + str(lt.size(catalog['Artworks'])))
     elif int(inputs[0]) == 2:
-        sorttype=int(input('Para ordenamiento por insertionsort ingrese 1, por shellsort ingrese 2, por quicksort ingrese 3 y por mergesort ingrese 4'))
+        startdate=datetime.date(input('Ingrese la fecha inicial '))
+        enddate=datetime.date(input('Ingrese la fecha inicial '))
         cmpfunction=controller.callcmp
-        if sorttype==1:
-            ordlist=controller.sortlistinsertion(catalog, cmpfunction)
-        elif sorttype==2:
-            ordlist=controller.sortlistshell(catalog, cmpfunction)
-        elif sorttype==3:
-            ordlist=controller.sortlistquick(catalog, cmpfunction)
-        elif sorttype==4:
-            ordlist=controller.sortlistmerge(catalog, cmpfunction)
+        ordlist=controller.sortlistquick(catalog, cmpfunction)
         size=int(input('ingrese el tamaño de la muestra que desea'))
         subordlist=controller.loadsublist(ordlist,0,size)
         print(subordlist)

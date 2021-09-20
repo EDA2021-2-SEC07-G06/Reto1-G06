@@ -60,6 +60,9 @@ def subList(lst, pos, numelem):
         return lt.subList(lst, pos, numelem)
     except Exception as exp:
         error.reraise(exp, 'List->subList: ')
+#def date_range(lst,start,end):
+    #for i in range(lst.size()):
+        #if lst
 def insertionsort(lst, cmpfunction):
     size = lt.size(lst)
     pos1 = 1
