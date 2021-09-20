@@ -54,7 +54,7 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
-        catalog = controller.initCatalog()
+        catalog = controller.initCatalogArrayList()
         controller.loadData(catalog)
         print('Artistas cargados: ' + str(lt.size(catalog['Artists'])))
         print('obras cargadas: ' + str(lt.size(catalog['Artworks'])))
