@@ -22,6 +22,8 @@
 
 import config as cf
 import model
+from DISClib.ADT import list as lt
+from datetime import datetime
 import csv
 
 
@@ -61,13 +63,23 @@ def calldaterangecmp(artwork,start,end):
     else:
         var=False
     return var
-def calldaterangelist(lst,cmp,start,end):
-    for i in range(0, lt.size(catalog['Artworks'])):
-        condition1=(datetime.strptime(start,'%Y-%m-%d' in catalog['Artworks']['elements'][i]['DateAcquired'] ))
-        condition2=(datetime.strptime(end,'%Y-%m-%d' in catalog['Artworks']['elements'][i]['DateAcquired'] ))
-        if  not condition1:
+def calldaterangelist(catalog,cmp,start,end):
+    size=lt.size(catalog)
+    for i in range(0,size ):
+        condition1=(datetime.strptime(start,'%Y-%m-%d' < catalog['elements'][0]['DateAcquired'] ))
+        condition2=(datetime.strptime(end,'%Y-%m-%d' > catalog['elements'][size]['DateAcquired'] ))
+        if  condition1:
             result=print('Fecha inicial no valida')
-    return model.daterangelist(lst,cmp,start,end)
+        elif condition2:
+            result=print('Fecha final no valida')
+        elif condition1 and condition2:
+            result=print('Fecha inicial y final no validas')
+        elif (not condition1) and (not condition2):
+            result=model.daterangelist(catalog,cmp,start,end)
+    return result
+def cleanordlist(catalog):
+    return model.cleanordlist(catalog)
+
 def callshowlist(lst):
     return 
 def sortlistinsertion(catalog,cmpfunction):
@@ -75,7 +87,7 @@ def sortlistinsertion(catalog,cmpfunction):
 def sortlistshell(catalog,cmpfunction):
     model.shellsort(catalog,cmpfunction)
 def sortlistquick(catalog,cmpfunction):
-    model.quicksort(catalog,cmpfunction)
+    model.sort(catalog,cmpfunction)
 def sortlistmerge(catalog,cmpfunction):
     model.mergesort(catalog,cmpfunction)
 # Funciones de ordenamiento

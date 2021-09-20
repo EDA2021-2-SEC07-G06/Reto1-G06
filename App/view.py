@@ -59,14 +59,20 @@ while True:
         print('Artistas cargados: ' + str(lt.size(catalog['Artists'])))
         print('obras cargadas: ' + str(lt.size(catalog['Artworks'])))
     elif int(inputs[0]) == 2:
-        for i in range(0, lt.size(catalog['Artworks'])):
-            print('1956-10-25' in catalog['Artworks']['elements'][i]['DateAcquired'] )
+        artworkslist=catalog['Artworks']
+        size=lt.size(artworkslist)
+        sortcmp=controller.callcmp
+        ordlist=controller.sortlistinsertion(artworkslist,sortcmp)
+        print(ordlist)
+        cleanordlist=controller.cleanordlist(ordlist)
+        size=lt.size(cleanordlist)
         startdate=str(input('Ingrese la fecha inicial '))
         startdate=datetime.strptime(startdate,'%Y-%m-%d')
         enddate=str(input('Ingrese la fecha final '))
         enddate=datetime.strptime(enddate,'%Y-%m-%d')
         cmpfunction=controller.calldaterangecmp
-        ordlist=controller.calldaterangelist(catalog['Artworks'],cmpfunction,startdate,enddate)
-        print(showlist=controller.callshowlist)
+        rangelist=controller.calldaterangelist(cleanordlist,cmpfunction,startdate,enddate)
+        for i in range(0,lt.size(cleanordlist)):
+            print(rangelist[i])
     else:
         sys.exit(0)

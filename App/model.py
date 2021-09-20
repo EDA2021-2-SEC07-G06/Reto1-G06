@@ -25,6 +25,7 @@
  """
 
 
+from DISClib.DataStructures.arraylist import addFirst
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
@@ -74,6 +75,13 @@ def daterangelist(lst,cmp,start,end):
         if cmp(artwork,start,end):
             lt.addFirst(newlist,artwork)
     return newlist
+def cleanordlist(catalog):
+    newlist=lt.newList('ARRAY_LIST',cmpfunction=None)
+    for i in range(0,lt.size(catalog)):
+        if catalog['elements'][i]['dateAcquired']!=(''):
+            lt.addFirst(newlist,catalog[i])
+    return newlist
+
 def insertionsort(lst, cmpfunction):
     size = lt.size(lst)
     pos1 = 1
