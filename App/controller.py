@@ -22,6 +22,10 @@
 
 import config as cf
 import model
+from DISClib.Algorithms.Sorting import quicksort as qck
+from DISClib.Algorithms.Sorting import insertionsort as insrt
+from DISClib.Algorithms.Sorting import shellsort as shllsrt
+from DISClib.Algorithms.Sorting import mergesort as mrg
 from DISClib.ADT import list as lt
 from datetime import datetime
 import csv
@@ -82,13 +86,13 @@ def cleanordlist(catalog):
 def callshowlist(lst):
     return 
 def sortlistinsertion(catalog,cmpfunction):
-    return model.insertionsort(catalog,cmpfunction)
+    return insrt.sort(catalog,cmpfunction)
 def sortlistshell(catalog,cmpfunction):
-    return model.shellsort(catalog,cmpfunction)
+    return shllsrt.sort(catalog,cmpfunction)
 def sortlistquick(catalog,cmpfunction):
-    return model.sort(catalog,cmpfunction)
+    return qck.sort(catalog,cmpfunction)
 def sortlistmerge(catalog,cmpfunction):
-    return model.mergesort(catalog,cmpfunction)
+    return mrg.sort(catalog,cmpfunction)
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
