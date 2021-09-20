@@ -78,8 +78,8 @@ def daterangelist(lst,cmp,start,end):
 def cleanordlist(catalog):
     newlist=lt.newList('ARRAY_LIST',cmpfunction=None)
     for i in range(0,lt.size(catalog)):
-        if catalog['elements'][i]['dateAcquired']!=(''):
-            lt.addFirst(newlist,catalog[i])
+        if catalog['elements'][i]['DateAcquired']!=(''):
+            lt.addLast(newlist,catalog['elements'][i])
     return newlist
 
 def insertionsort(lst, cmpfunction):

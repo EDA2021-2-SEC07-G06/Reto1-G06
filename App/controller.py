@@ -66,14 +66,10 @@ def calldaterangecmp(artwork,start,end):
 def calldaterangelist(catalog,cmp,start,end):
     size=lt.size(catalog)
     for i in range(0,size ):
-        condition1=(datetime.strptime(start,'%Y-%m-%d' < catalog['elements'][0]['DateAcquired'] ))
-        condition2=(datetime.strptime(end,'%Y-%m-%d' > catalog['elements'][size]['DateAcquired'] ))
-        if  condition1:
-            result=print('Fecha inicial no valida')
-        elif condition2:
-            result=print('Fecha final no valida')
-        elif condition1 and condition2:
-            result=print('Fecha inicial y final no validas')
+        condition1=start < (datetime.strptime(catalog['elements'][0]['DateAcquired'],'%Y-%m-%d' ))
+        condition2=end > datetime.strptime(catalog['elements'][size-1]['DateAcquired'],'%Y-%m-%d' )
+        if condition1 and condition2:
+            result=print('Rango de tiempo no valido')
         elif (not condition1) and (not condition2):
             result=model.daterangelist(catalog,cmp,start,end)
     return result
@@ -83,13 +79,13 @@ def cleanordlist(catalog):
 def callshowlist(lst):
     return 
 def sortlistinsertion(catalog,cmpfunction):
-    model.insertionsort(catalog,cmpfunction)
+    return model.insertionsort(catalog,cmpfunction)
 def sortlistshell(catalog,cmpfunction):
-    model.shellsort(catalog,cmpfunction)
+    return model.shellsort(catalog,cmpfunction)
 def sortlistquick(catalog,cmpfunction):
-    model.sort(catalog,cmpfunction)
+    return model.sort(catalog,cmpfunction)
 def sortlistmerge(catalog,cmpfunction):
-    model.mergesort(catalog,cmpfunction)
+    return model.mergesort(catalog,cmpfunction)
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
