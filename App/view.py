@@ -54,12 +54,7 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
-        print("Cargando información de los archivos ....")
-        catalog_type=int(input("Presiona 1 para cargar la lista con tipo Linked List y 2 para cargar la lista con tipo Array List."))
-        if catalog_type==1:
-            catalog = controller.initCatalogSingleLinked()
-        elif catalog_type==2:
-            catalog = controller.initCatalogArrayList()
+        catalog = controller.initCatalog
         controller.loadData(catalog)
         print('Artistas cargados: ' + str(lt.size(catalog['Artists'])))
         print('obras cargadas: ' + str(lt.size(catalog['Artworks'])))
