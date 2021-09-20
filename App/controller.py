@@ -56,9 +56,20 @@ def loadsublist(lst,pos,numelem):
 def callcmp(artwork1,artwork2):
     return model.cmpArtworkByDateAcquired(artwork1,artwork2)
 def calldaterangecmp(artwork,start,end):
-    return model.cmpdaterange(artwork,start,end)
+    if start != ('') and end != ('') and artwork['DateAcquired'] != (''):
+        var= model.cmpdaterange(artwork,start,end)
+    else:
+        var=False
+    return var
 def calldaterangelist(lst,cmp,start,end):
+    for i in range(0, lt.size(catalog['Artworks'])):
+        condition1=(datetime.strptime(start,'%Y-%m-%d' in catalog['Artworks']['elements'][i]['DateAcquired'] ))
+        condition2=(datetime.strptime(end,'%Y-%m-%d' in catalog['Artworks']['elements'][i]['DateAcquired'] ))
+        if  not condition1:
+            result=print('Fecha inicial no valida')
     return model.daterangelist(lst,cmp,start,end)
+def callshowlist(lst):
+    return 
 def sortlistinsertion(catalog,cmpfunction):
     model.insertionsort(catalog,cmpfunction)
 def sortlistshell(catalog,cmpfunction):

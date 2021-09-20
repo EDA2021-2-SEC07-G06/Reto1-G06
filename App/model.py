@@ -28,7 +28,7 @@
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
-import datetime
+from datetime import datetime
 from DISClib.Utils import error as error
 assert cf
 
@@ -65,18 +65,14 @@ def subList(lst, pos, numelem):
     except Exception as exp:
         error.reraise(exp, 'List->subList: ')
 def cmpdaterange(artwork,start,end):
-    if start != ('') and end!=(''):
-        condition=artwork['DateAcquired']>start and artwork['DateAcquired']<end
-    else:
-        condition="False"
-    return condition
+    return datetime.strptime(artwork['DateAcquired'],'%Y-%m-%d')>start and datetime.strptime(artwork['DateAcquired'],'%Y-%m-%d')<end
 def daterangelist(lst,cmp,start,end):
-    size=lst.size(lst)
+    size=lt.size(lst)
     newlist=lt.newList('ARRAY_LIST', cmpfunction=None)
-    for i in size:
+    for i in range(0,size):
         artwork=lt.getElement(lst,i)
         if cmp(artwork,start,end):
-            lt.addLast(newlist,artwork)
+            lt.addFirst(newlist,artwork)
     return newlist
 def insertionsort(lst, cmpfunction):
     size = lt.size(lst)
