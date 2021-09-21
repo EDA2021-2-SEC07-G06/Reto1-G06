@@ -20,7 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
-from prettytable import PrettyTable
+from tabulate import tabulate
 import config as cf
 import sys
 from datetime import datetime
@@ -71,9 +71,9 @@ while True:
         enddate=datetime.strptime(enddate,'%Y-%m-%d')
         cmpfunction=controller.calldaterangecmp
         rangelist=controller.calldaterangelist(cleanordlist,cmpfunction,startdate,enddate)
-        headers=['Artists','Title','DateAcquired','Medium','Dimensions']
-        adjustvalues=controller.calladjustvalues(rangelist, headers, catalog)
-        print(tabulate(adjustvalues,headers))
+        header=['Artists','Title','DateAcquired','Medium','Dimensions']
+        adjustvalues=controller.calladjustvalues(rangelist, header, catalog)
+        print(tabulate(adjustvalues,headers=['Artists','Title','DateAcquired','Medium','Dimensions'], tablefmt='grid', numalign='right', stralign='right'))
 
     else:
         sys.exit(0)

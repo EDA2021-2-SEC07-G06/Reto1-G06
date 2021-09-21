@@ -95,15 +95,15 @@ def artistsearchbyID(ID, generalcatalog):
 def adjustvalues(resultcatalog, headers,generalcatalog):
     size=len(headers)
     sizecatalog=lt.size(resultcatalog)
-    mainlist=lt.newList('ARRAY_LIST', cmpfunction=None)
-    secondarylist=lt.newList('ARRAY_LIST', cmpfunction=None)
+    mainlist=[]
+    secondarylist=[]
     for item in range(0,sizecatalog):
         ID=str(resultcatalog['elements'][item]['ConstituentID'])
-        lt.addLast(secondarylist,str(artistsearchbyID(ID,generalcatalog)))
+        secondarylist.append(str(artistsearchbyID(ID,generalcatalog)))
         for i in range (1,size):
-            lt.addLast(secondarylist,resultcatalog['elements'][item][headers[i]])
-        lt.addFirst(mainlist, secondarylist)
-        lt.removeFirst(secondarylist)
+            secondarylist.append(resultcatalog['elements'][item][headers[i]])
+        mainlist.append(secondarylist)
+        secondarylist=[]
     return mainlist
 
 
