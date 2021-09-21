@@ -62,24 +62,25 @@ def loadsublist(lst,pos,numelem):
 #req1
 def callartistrangelist(catalog,cmp,start,end):
     size=lt.size(catalog)
-    for i in range(0,size ):
-        condition1=start < (datetime.strptime(catalog['elements'][0]['BeginDate'],'%Y-%m-%d' ))
-        condition2=end > datetime.strptime(catalog['elements'][size-1]['BeginDate'],'%Y-%m-%d' )
-        if condition1 and condition2:
-            result=print('Invalid Range')
-        elif (not condition1) and (not condition2):
-            result=model.daterangelist(catalog,cmp,start,end)
-        return result
+    condition1=start < (datetime.strptime(catalog['elements'][0]['BeginDate'],'%Y' ))
+    condition2=end > datetime.strptime(catalog['elements'][size-1]['BeginDate'],'%Y' )
+    if condition1 and condition2:
+        result=print('Invalid Range')
+    else:
+        result=model.daterangelist(catalog,cmp,start,end)
+    return result
 def callartistrangecmp(artist,start,end):
-    if start != ('') and end != ('') and artist['BeginDate'] != (''):
+    if artist['BeginDate'] != ('0'):
         var= model.cmpartistrange(artist,start,end)
     else:
         var=False
     return var
-def calladjustartistvalues(catalog,headers,secondarycatalog):
-    return model.adjustartistvalues(catalog,headers,secondarycatalog)
+def calladjustartistvalues(catalog,headers):
+    return model.adjustartistvalues(catalog,headers)
 def callartistcmp(artist1,artist2):
     return model.cmpArtistByDateAcquired(artist1,artist2)
+def callartistcleanordlist(catalog):
+    return model.cleanartistordlist(catalog)
 #req2
 def callcmp(artwork1,artwork2):
     return model.cmpArtworkByDateAcquired(artwork1,artwork2)
@@ -91,16 +92,15 @@ def callartworkrangecmp(artwork,start,end):
     return var
 def callartworkrangelist(catalog,cmp,start,end):
     size=lt.size(catalog)
-    for i in range(0,size ):
-        condition1=start < (datetime.strptime(catalog['elements'][0]['DateAcquired'],'%Y-%m-%d' ))
-        condition2=end > datetime.strptime(catalog['elements'][size-1]['DateAcquired'],'%Y-%m-%d' )
-        if condition1 and condition2:
-            result=print('Invalid Range')
-        elif (not condition1) and (not condition2):
-            result=model.daterangelist(catalog,cmp,start,end)
+    condition1=start < (datetime.strptime(catalog['elements'][0]['DateAcquired'],'%Y-%m-%d' ))
+    condition2=end > datetime.strptime(catalog['elements'][size-1]['DateAcquired'],'%Y-%m-%d' )
+    if condition1 and condition2:
+        result=print('Invalid Range')
+    elif (not condition1) and (not condition2):
+        result=model.daterangelist(catalog,cmp,start,end)
     return result
-def cleanordlist(catalog):
-    return model.cleanordlist(catalog)
+def callartworkscleanordlist(catalog):
+    return model.cleanartworksordlist(catalog)
 def calladjustvalues(catalog,headers,secondarycatalog):
     return model.adjustvalues(catalog,headers,secondarycatalog)
 def callshowlist(lst):

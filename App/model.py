@@ -64,16 +64,16 @@ def subList(lst, pos, numelem):
     except Exception as exp:
         error.reraise(exp, 'List->subList: ')
 def cmpartworkrange(artwork,start,end):
-    return datetime.strptime(artwork['DateAcquired'],'%Y-%m-%d')>start and datetime.strptime(artwork['DateAcquired'],'%Y-%m-%d')<end
+    return datetime.strptime(artwork['DateAcquired'],'%Y-%m-%d')>=start and datetime.strptime(artwork['DateAcquired'],'%Y-%m-%d')<=end
 def daterangelist(lst,cmp,start,end):
     size=lt.size(lst)
     newlist=lt.newList('ARRAY_LIST', cmpfunction=None)
     for i in range(0,size):
         artist=lt.getElement(lst,i)
         if cmp(artist,start,end):
-            lt.addFirst(newlist,artist)
+            lt.addLast(newlist,artist)
     return newlist
-def cleanordlist(catalog):
+def cleanartworksordlist(catalog):
     newlist=lt.newList('ARRAY_LIST',cmpfunction=None)
     for i in range(0,lt.size(catalog)):
         if catalog['elements'][i]['DateAcquired']!=(''):
@@ -110,7 +110,7 @@ def adjustvalues(resultcatalog, headers,generalcatalog):
     return mainlist, Artistcount,purchases
 #req 1
 def cmpartistrange(artist,start,end):
-    return datetime.strptime(artist['BeginDate'],'%Y-%m-%d')>start and datetime.strptime(artist['BeginDate'],'%Y-%m-%d')<end
+    return datetime.strptime(artist['BeginDate'],'%Y') >= start and datetime.strptime(artist['BeginDate'],'%Y')<=end
 def adjustartistvalues(resultcatalog, headers):
     size=len(headers)
     sizecatalog=lt.size(resultcatalog)
@@ -129,11 +129,17 @@ def adjustartistvalues(resultcatalog, headers):
         secondarylist=[]
     return mainlist, Artistcount
 def cmpArtistByDateAcquired(artist1,artist2):
-    if artist1['BeginDate']!=str('') and artist2['BeginDate'] !=str(''):
-        condition=(datetime.strptime(artist1['BeginDate'],'%Y')< datetime.strptime(artist2['BeginDate'],'%Y'))
+    if artist1['BeginDate'] !=str('0') and artist2['BeginDate'] !=str('0'):
+        condition= int(artist1['BeginDate']) < int(artist2['BeginDate'])
     else:
         condition=False
     return condition    
+def cleanartistordlist(catalog):
+    newlist=lt.newList('ARRAY_LIST',cmpfunction=None)
+    for i in range(0,lt.size(catalog)):
+        if catalog['elements'][i]['BeginDate']!=('0'):
+            lt.addLast(newlist,catalog['elements'][i])
+    return newlist
 
 
 # Funciones para creacion de datos

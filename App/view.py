@@ -64,16 +64,18 @@ while True:
     elif int(inputs[0]) == 2:
         artistslist=catalog['Artists']
         sortcmp=controller.callartistcmp
-        ordlist=controller.sortlistinsertion(artistslist,sortcmp)
+        clean=controller.callartistcleanordlist(artistslist)
+        ordlist=controller.sortlistinsertion(clean,sortcmp)
         size=lt.size(ordlist)
         startdate=str(input('Ingrese la fecha inicial '))
-        startdate=datetime.strptime(startdate,'%Y-%m-%d')
+        startdate=datetime.strptime(startdate,'%Y')
         enddate=str(input('Ingrese la fecha final '))
-        enddate=datetime.strptime(enddate,'%Y-%m-%d')
+        enddate=datetime.strptime(enddate,'%Y')
         cmpfunction=controller.callartistrangecmp
         rangelist=controller.callartistrangelist(ordlist,cmpfunction,startdate,enddate)
+        rangelist=controller.sortlistinsertion(rangelist,sortcmp)
         header=['DisplayName','BeginDate','EndDate','Nationality','Gender']
-        adjustvalues,Artistcount=controller.calladjustvalues(rangelist, header, catalog)
+        adjustvalues,Artistcount=controller.calladjustartistvalues(rangelist, header)
         finallist= adjustvalues[0:3] + adjustvalues[len(adjustvalues)-3:len(adjustvalues)]
         maintable=PrettyTable()
         maintable.field_names = ['DisplayName','BeginDate','EndDate','Nationality','Gender']
@@ -82,10 +84,12 @@ while True:
         for i in range(0,len(finallist)):
             maintable.add_row(finallist[i])
         print(maintable)
+        print(Artistcount)
     elif int(inputs[0]) == 3:
         artworkslist=catalog['Artworks']
         sortcmp=controller.callcmp
-        ordlist=controller.sortlistinsertion(artworkslist,sortcmp)
+        clean=controller.callartworkscleanordlist(artworkslist)
+        ordlist=controller.sortlistinsertion(clean,sortcmp)
         size=lt.size(ordlist)
         startdate=str(input('Ingrese la fecha inicial '))
         startdate=datetime.strptime(startdate,'%Y-%m-%d')
@@ -93,6 +97,7 @@ while True:
         enddate=datetime.strptime(enddate,'%Y-%m-%d')
         cmpfunction=controller.callartworkrangecmp
         rangelist=controller.callartworkrangelist(ordlist,cmpfunction,startdate,enddate)
+        rangelist=controller.sortlistinsertion(rangelist,sortcmp)
         header=['Artists','Title','DateAcquired','Medium','Dimensions']
         adjustvalues,Artistcount,purchases=controller.calladjustvalues(rangelist, header, catalog)
         finallist= adjustvalues[0:3] + adjustvalues[len(adjustvalues)-3:len(adjustvalues)]
@@ -102,7 +107,7 @@ while True:
         maintable._max_width= {'Artists':12,'Title':30,'DateAcquired':10,'Medium':20,'Dimensions':30}
         for i in range(0,len(finallist)):
             maintable.add_row(finallist[i])
-        print('The MOMA acquired '+ str(len(adjustvalues)) +' unique pieces between '+ str(startdate) +' and '+ str(enddate)+'\n'+'With '+ str(Artistcount)+' different artists and purchased '+ str(purchases) + ' of them \n')
+        print('\n The MOMA acquired '+ str(len(adjustvalues)) +' unique pieces between '+ str(startdate) +' and '+ str(enddate)+'\n'+'With '+ str(Artistcount)+' different artists and purchased '+ str(purchases) + ' of them \n')
         print('the first and last 3 artworks in the range are: \n')
         print(maintable)
     else:
