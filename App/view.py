@@ -20,12 +20,14 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+import prettytable
 from tabulate import tabulate
 import config as cf
 import sys
 from datetime import datetime
 import controller
 from DISClib.ADT import list as lt
+from prettytable import PrettyTable
 assert cf
 
 
@@ -58,22 +60,50 @@ while True:
         catalog = controller.initCatalog()
         controller.loadData(catalog)
         print('Artistas cargados: ' + str(lt.size(catalog['Artists'])))
-        print('obras cargadas: ' + str(lt.size(catalog['Artworks'])))
+        print('Obras Cargadas: ' + str(lt.size(catalog['Artworks'])))
     elif int(inputs[0]) == 2:
-        artworkslist=catalog['Artworks']
-        sortcmp=controller.callcmp
-        ordlist=controller.sortlistinsertion(artworkslist,sortcmp)
-        cleanordlist=controller.cleanordlist(ordlist)
-        size=lt.size(cleanordlist)
+        artistslist=catalog['Artists']
+        sortcmp=controller.callartistcmp
+        ordlist=controller.sortlistinsertion(artistslist,sortcmp)
+        size=lt.size(ordlist)
         startdate=str(input('Ingrese la fecha inicial '))
         startdate=datetime.strptime(startdate,'%Y-%m-%d')
         enddate=str(input('Ingrese la fecha final '))
         enddate=datetime.strptime(enddate,'%Y-%m-%d')
-        cmpfunction=controller.calldaterangecmp
-        rangelist=controller.calldaterangelist(cleanordlist,cmpfunction,startdate,enddate)
+        cmpfunction=controller.callartistrangecmp
+        rangelist=controller.callartistrangelist(ordlist,cmpfunction,startdate,enddate)
+        header=['DisplayName','BeginDate','EndDate','Nationality','Gender']
+        adjustvalues,Artistcount=controller.calladjustvalues(rangelist, header, catalog)
+        finallist= adjustvalues[0:3] + adjustvalues[len(adjustvalues)-3:len(adjustvalues)]
+        maintable=PrettyTable()
+        maintable.field_names = ['DisplayName','BeginDate','EndDate','Nationality','Gender']
+        maintable.align='l'
+        maintable._max_width= {'DisplayName':20,'BeginDate':10,'EndDate':10,'Nationality':15,'Gender':10}
+        for i in range(0,len(finallist)):
+            maintable.add_row(finallist[i])
+        print(maintable)
+    elif int(inputs[0]) == 3:
+        artworkslist=catalog['Artworks']
+        sortcmp=controller.callcmp
+        ordlist=controller.sortlistinsertion(artworkslist,sortcmp)
+        size=lt.size(ordlist)
+        startdate=str(input('Ingrese la fecha inicial '))
+        startdate=datetime.strptime(startdate,'%Y-%m-%d')
+        enddate=str(input('Ingrese la fecha final '))
+        enddate=datetime.strptime(enddate,'%Y-%m-%d')
+        cmpfunction=controller.callartworkrangecmp
+        rangelist=controller.callartworkrangelist(ordlist,cmpfunction,startdate,enddate)
         header=['Artists','Title','DateAcquired','Medium','Dimensions']
-        adjustvalues=controller.calladjustvalues(rangelist, header, catalog)
-        print(tabulate(adjustvalues,headers=['Artists','Title','DateAcquired','Medium','Dimensions'], tablefmt='grid', numalign='right', stralign='right'))
-
+        adjustvalues,Artistcount,purchases=controller.calladjustvalues(rangelist, header, catalog)
+        finallist= adjustvalues[0:3] + adjustvalues[len(adjustvalues)-3:len(adjustvalues)]
+        maintable=PrettyTable()
+        maintable.field_names = ['Artists','Title','DateAcquired','Medium','Dimensions']
+        maintable.align='l'
+        maintable._max_width= {'Artists':12,'Title':30,'DateAcquired':10,'Medium':20,'Dimensions':30}
+        for i in range(0,len(finallist)):
+            maintable.add_row(finallist[i])
+        print('The MOMA acquired '+ str(len(adjustvalues)) +' unique pieces between '+ str(startdate) +' and '+ str(enddate)+'\n'+'With '+ str(Artistcount)+' different artists and purchased '+ str(purchases) + ' of them \n')
+        print('the first and last 3 artworks in the range are: \n')
+        print(maintable)
     else:
         sys.exit(0)

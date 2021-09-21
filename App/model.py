@@ -63,15 +63,15 @@ def subList(lst, pos, numelem):
         return lt.subList(lst, pos, numelem)
     except Exception as exp:
         error.reraise(exp, 'List->subList: ')
-def cmpdaterange(artwork,start,end):
+def cmpartworkrange(artwork,start,end):
     return datetime.strptime(artwork['DateAcquired'],'%Y-%m-%d')>start and datetime.strptime(artwork['DateAcquired'],'%Y-%m-%d')<end
 def daterangelist(lst,cmp,start,end):
     size=lt.size(lst)
     newlist=lt.newList('ARRAY_LIST', cmpfunction=None)
     for i in range(0,size):
-        artwork=lt.getElement(lst,i)
-        if cmp(artwork,start,end):
-            lt.addFirst(newlist,artwork)
+        artist=lt.getElement(lst,i)
+        if cmp(artist,start,end):
+            lt.addFirst(newlist,artist)
     return newlist
 def cleanordlist(catalog):
     newlist=lt.newList('ARRAY_LIST',cmpfunction=None)
@@ -79,11 +79,6 @@ def cleanordlist(catalog):
         if catalog['elements'][i]['DateAcquired']!=(''):
             lt.addLast(newlist,catalog['elements'][i])
     return newlist
-def fixed_lenght(text, lenght):
-    if len(text)>lenght:
-        text = text[:lenght] + ('\n') + text[lenght:]
-    elif len (text)< lenght:
-        text = (text +' '+lenght)
 def artistsearchbyID(ID, generalcatalog):
     Name=''
     for i in range (lt.size(generalcatalog['Artists'])):
@@ -97,17 +92,48 @@ def adjustvalues(resultcatalog, headers,generalcatalog):
     sizecatalog=lt.size(resultcatalog)
     mainlist=[]
     secondarylist=[]
+    IDlist=[]
+    Artistcount=0
+    purchases=0
     for item in range(0,sizecatalog):
         ID=str(resultcatalog['elements'][item]['ConstituentID'])
         secondarylist.append(str(artistsearchbyID(ID,generalcatalog)))
+        if ID not in IDlist:
+            Artistcount += 1
+        IDlist.append(ID)
+        if resultcatalog['elements'][item]['CreditLine']=='Purchase':
+            purchases+=1
         for i in range (1,size):
             secondarylist.append(resultcatalog['elements'][item][headers[i]])
         mainlist.append(secondarylist)
         secondarylist=[]
-    return mainlist
-
-
-
+    return mainlist, Artistcount,purchases
+#req 1
+def cmpartistrange(artist,start,end):
+    return datetime.strptime(artist['BeginDate'],'%Y-%m-%d')>start and datetime.strptime(artist['BeginDate'],'%Y-%m-%d')<end
+def adjustartistvalues(resultcatalog, headers):
+    size=len(headers)
+    sizecatalog=lt.size(resultcatalog)
+    mainlist=[]
+    secondarylist=[]
+    IDlist=[]
+    Artistcount=0
+    for item in range(0,sizecatalog):
+        ID=str(resultcatalog['elements'][item]['ConstituentID'])
+        if ID not in IDlist:
+            Artistcount += 1
+        IDlist.append(ID)
+        for i in range (0,size):
+            secondarylist.append(resultcatalog['elements'][item][headers[i]])
+        mainlist.append(secondarylist)
+        secondarylist=[]
+    return mainlist, Artistcount
+def cmpArtistByDateAcquired(artist1,artist2):
+    if artist1['BeginDate']!=str('') and artist2['BeginDate'] !=str(''):
+        condition=(datetime.strptime(artist1['BeginDate'],'%Y')< datetime.strptime(artist2['BeginDate'],'%Y'))
+    else:
+        condition=False
+    return condition    
 
 
 # Funciones para creacion de datos

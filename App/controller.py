@@ -59,21 +59,43 @@ def loadArtworks(catalog):
         model.addArtwork(catalog, Artwork)
 def loadsublist(lst,pos,numelem):
     return model.sublist(lst,pos,numelem)
-def callcmp(artwork1,artwork2):
-    return model.cmpArtworkByDateAcquired(artwork1,artwork2)
-def calldaterangecmp(artwork,start,end):
-    if start != ('') and end != ('') and artwork['DateAcquired'] != (''):
-        var= model.cmpdaterange(artwork,start,end)
+#req1
+def callartistrangelist(catalog,cmp,start,end):
+    size=lt.size(catalog)
+    for i in range(0,size ):
+        condition1=start < (datetime.strptime(catalog['elements'][0]['BeginDate'],'%Y-%m-%d' ))
+        condition2=end > datetime.strptime(catalog['elements'][size-1]['BeginDate'],'%Y-%m-%d' )
+        if condition1 and condition2:
+            result=print('Invalid Range')
+        elif (not condition1) and (not condition2):
+            result=model.daterangelist(catalog,cmp,start,end)
+        return result
+def callartistrangecmp(artist,start,end):
+    if start != ('') and end != ('') and artist['BeginDate'] != (''):
+        var= model.cmpartistrange(artist,start,end)
     else:
         var=False
     return var
-def calldaterangelist(catalog,cmp,start,end):
+def calladjustartistvalues(catalog,headers,secondarycatalog):
+    return model.adjustartistvalues(catalog,headers,secondarycatalog)
+def callartistcmp(artist1,artist2):
+    return model.cmpArtistByDateAcquired(artist1,artist2)
+#req2
+def callcmp(artwork1,artwork2):
+    return model.cmpArtworkByDateAcquired(artwork1,artwork2)
+def callartworkrangecmp(artwork,start,end):
+    if start != ('') and end != ('') and artwork['DateAcquired'] != (''):
+        var= model.cmpartworkrange(artwork,start,end)
+    else:
+        var=False
+    return var
+def callartworkrangelist(catalog,cmp,start,end):
     size=lt.size(catalog)
     for i in range(0,size ):
         condition1=start < (datetime.strptime(catalog['elements'][0]['DateAcquired'],'%Y-%m-%d' ))
         condition2=end > datetime.strptime(catalog['elements'][size-1]['DateAcquired'],'%Y-%m-%d' )
         if condition1 and condition2:
-            result=print('Rango de tiempo no valido')
+            result=print('Invalid Range')
         elif (not condition1) and (not condition2):
             result=model.daterangelist(catalog,cmp,start,end)
     return result
