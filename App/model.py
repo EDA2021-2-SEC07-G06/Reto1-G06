@@ -24,8 +24,6 @@
  * Dario Correal - Version inicial
  """
 
-
-from DISClib.DataStructures.arraylist import addFirst
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
@@ -81,6 +79,36 @@ def cleanordlist(catalog):
         if catalog['elements'][i]['DateAcquired']!=(''):
             lt.addLast(newlist,catalog['elements'][i])
     return newlist
+def fixed_lenght(text, lenght):
+    if len(text)>lenght:
+        text = text[:lenght] + ('\n') + text[lenght:]
+    elif len (text)< lenght:
+        text = (text +' '+lenght)
+def artistsearchbyID(ID, generalcatalog):
+    Name=''
+    for i in range (lt.size(generalcatalog['Artists'])):
+        if ID == generalcatalog['Artists']['elements'][i]['ConstituentID']:
+            Name+= str(generalcatalog['Artists']['elements'][i]['DisplayName'])
+        else:
+            Name= 'Not Found'
+    return Name
+def adjustvalues(resultcatalog, headers,generalcatalog):
+    size=len(headers)
+    sizecatalog=lt.size(resultcatalog)
+    mainlist=lt.newList('ARRAY_LIST', cmpfunction=None)
+    secondarylist=lt.newList('ARRAY_LIST', cmpfunction=None)
+    for item in range(0,sizecatalog):
+        ID=str(resultcatalog['elements'][item]['ConstituentID'])
+        lt.addLast(secondarylist,str(artistsearchbyID(ID,generalcatalog)))
+        for i in range (1,size):
+            lt.addLast(secondarylist,resultcatalog['elements'][item][headers[i]])
+        lt.addFirst(mainlist, secondarylist)
+        lt.removeFirst(secondarylist)
+    return mainlist
+
+
+
+
 
 # Funciones para creacion de datos
 

@@ -79,7 +79,8 @@ def calldaterangelist(catalog,cmp,start,end):
     return result
 def cleanordlist(catalog):
     return model.cleanordlist(catalog)
-
+def calladjustvalues(catalog,headers,secondarycatalog):
+    return model.adjustvalues(catalog,headers,secondarycatalog)
 def callshowlist(lst):
     return 
 def sortlistinsertion(catalog,cmpfunction):
