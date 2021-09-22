@@ -59,10 +59,10 @@ while True:
         if catalog_type==1:
             catalog = controller.initCatalogSingleLinked()
         elif catalog_type==2:
-        catalog = controller.initCatalogArrayList()
-        controller.loadData(catalog)
-        print('Artistas cargados: ' + str(lt.size(catalog['Artists'])))
-        print('obras cargadas: ' + str(lt.size(catalog['Artworks'])))
+            catalog = controller.initCatalogArrayList()
+            controller.loadData(catalog)
+            print('Artistas cargados: ' + str(lt.size(catalog['Artists'])))
+            print('obras cargadas: ' + str(lt.size(catalog['Artworks'])))
     elif int(inputs[0]) == 2:
         artworklist=catalog['Artworks']
         sorttype=int(input('Para ordenamiento por insertionsort ingrese 1, por shellsort ingrese 2, por quicksort ingrese 3 y por mergesort ingrese 4'))
