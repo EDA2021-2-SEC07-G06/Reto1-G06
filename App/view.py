@@ -77,5 +77,9 @@ while True:
         order=int(input('ingrese el tamaño de la muestra que desea'))
         subordlist=controller.loadsublist(ordlist,0,order)
         print(subordlist)
+    elif int(inputs[0] == 6):
+        Departamento=input("Escoge el departamento del cual quiere transferir las obras.")
+        artworklist=catalog["Artworks"]
+        
     else:
         sys.exit(0)

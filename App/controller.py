@@ -68,6 +68,10 @@ def sortlistquick(catalog,cmpfunction):
     model.quicksort(catalog,cmpfunction)
 def sortlistmerge(catalog,cmpfunction):
     model.mergesort(catalog,cmpfunction)
+
+def transferartworks(artworks, department):
+    model.transferartworks(artworks, department)
+
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
