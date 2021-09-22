@@ -22,6 +22,7 @@
 
 import config as cf
 import sys
+from datetime import datetime
 import controller
 from DISClib.ADT import list as lt
 assert cf
@@ -58,7 +59,7 @@ while True:
         if catalog_type==1:
             catalog = controller.initCatalogSingleLinked()
         elif catalog_type==2:
-            catalog = controller.initCatalogArrayList()
+        catalog = controller.initCatalogArrayList()
         controller.loadData(catalog)
         print('Artistas cargados: ' + str(lt.size(catalog['Artists'])))
         print('obras cargadas: ' + str(lt.size(catalog['Artworks'])))
@@ -99,5 +100,18 @@ while True:
         + str(listamasantiguos[2]) + "\n"
         + str(listamasantiguos[3]) + "\n"
         + str(listamasantiguos[4]))
+        artworkslist=catalog['Artworks']
+        sortcmp=controller.callcmp
+        ordlist=controller.sortlistinsertion(artworkslist,sortcmp)
+        cleanordlist=controller.cleanordlist(ordlist)
+        size=lt.size(cleanordlist)
+        startdate=str(input('Ingrese la fecha inicial '))
+        startdate=datetime.strptime(startdate,'%Y-%m-%d')
+        enddate=str(input('Ingrese la fecha final '))
+        enddate=datetime.strptime(enddate,'%Y-%m-%d')
+        cmpfunction=controller.calldaterangecmp
+        rangelist=controller.calldaterangelist(cleanordlist,cmpfunction,startdate,enddate)
+        for i in range(0,(lt.size(rangelist))):
+            print(rangelist['elements'][i]['ObjectID'])
     else:
         sys.exit(0)
