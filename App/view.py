@@ -83,8 +83,9 @@ while True:
         maintable._max_width= {'DisplayName':20,'BeginDate':10,'EndDate':10,'Nationality':15,'Gender':10}
         for i in range(0,len(finallist)):
             maintable.add_row(finallist[i])
+        print('\nThere are'+ str(Artistcount) + 'artist born between' + str(startdate) + 'and' + str(enddate))
+        print('The first and last 3 artists in range are...\n')
         print(maintable)
-        print(Artistcount)
     elif int(inputs[0]) == 3:
         artworkslist=catalog['Artworks']
         sortcmp=controller.callcmp
@@ -110,5 +111,32 @@ while True:
         print('\n The MOMA acquired '+ str(len(adjustvalues)) +' unique pieces between '+ str(startdate) +' and '+ str(enddate)+'\n'+'With '+ str(Artistcount)+' different artists and purchased '+ str(purchases) + ' of them \n')
         print('the first and last 3 artworks in the range are: \n')
         print(maintable)
+    elif int(inputs[0])==4:
+        artworkslist=catalog['Artworks']
+        cmpfunction=controller.callnationcmp
+        artistlist=catalog['Artists']
+        dictionary,Nationalities=controller.calldictionarymaker( artistlist,artworkslist)
+        ArtbyNation=controller.callArtByNation(dictionary,Nationalities)
+        ordlist=controller.sortlistinsertion(ArtbyNation, cmpfunction)
+        Nationstable=PrettyTable()
+        Nationstable.field_names = ['Nationality','ArtWorks']
+        Nationstable.align='l'
+        Nationstable._max_width= {'Nationality':20,'ArtWorks':8}
+        print(ordlist['elements'][0])
+        for Country in lt.iterator(ordlist):
+            Nationstable.add_row([str(Country['Country']),str(Country['size'])])
+        print(Nationstable)
+        greatest=ordlist['elements'][0]['Country']
+        greatesttable=PrettyTable()
+        headers=['Title','DateAcquired','Medium','Dimensions']
+        greatestlist=controller.callgreatestlist(headers,dictionary,greatest,catalog)
+        greatesttable.field_names =['Artist','Title','DateAcquired','Medium','Dimensions']
+        greatesttable._max_width= {'Artists':12,'Title':30,'DateAcquired':10,'Medium':20,'Dimensions':30}
+        for i in lt.iterator(greatestlist):
+            greatesttable.add_row([str(i['Artist']), str(i['Title']), str(i['DateAcquired']), str(i['Medium']), str(i['Dimensions'])])
+        print(greatesttable.get_string(start=0, end=3))
+        print(greatesttable.get_string(start=lt.size(greatestlist)-3, end=lt.size(greatestlist)))
+        print(greatesttable.get_string(start=1, end=4))
+        
     else:
         sys.exit(0)

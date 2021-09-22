@@ -105,6 +105,16 @@ def calladjustvalues(catalog,headers,secondarycatalog):
     return model.adjustvalues(catalog,headers,secondarycatalog)
 def callshowlist(lst):
     return 
+#req4
+def calldictionarymaker(artists,artworks):
+    return model.dictionarymaker( artists,artworks)
+def callArtByNation(dictionary,Nationalities):
+    return model.ArtByNation(dictionary,Nationalities)
+def callnationcmp(nation1, nation2):
+    return model.nationcmp(nation1,nation2)
+def callgreatestlist(headers,dictionary,greatest,generalcatalog):
+    return model.greatestlist(headers,dictionary,greatest,generalcatalog)
+#sortingalgorithms
 def sortlistinsertion(catalog,cmpfunction):
     return insrt.sort(catalog,cmpfunction)
 def sortlistshell(catalog,cmpfunction):

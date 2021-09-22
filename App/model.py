@@ -24,6 +24,7 @@
  * Dario Correal - Version inicial
  """
 
+from collections import OrderedDict
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
@@ -82,8 +83,10 @@ def cleanartworksordlist(catalog):
 def artistsearchbyID(ID, generalcatalog):
     Name=''
     for i in range (lt.size(generalcatalog['Artists'])):
-        if ID == generalcatalog['Artists']['elements'][i]['ConstituentID']:
-            Name+= str(generalcatalog['Artists']['elements'][i]['DisplayName'])
+        if str(ID) == str(generalcatalog['Artists']['elements'][i]['ConstituentID']):
+            print(str(ID) == str(generalcatalog['Artists']['elements'][i]['ConstituentID']))
+            Name= str(generalcatalog['Artists']['elements'][i]['DisplayName'])
+            break
         else:
             Name= 'Not Found'
     return Name
@@ -139,6 +142,45 @@ def cleanartistordlist(catalog):
     for i in range(0,lt.size(catalog)):
         if catalog['elements'][i]['BeginDate']!=('0'):
             lt.addLast(newlist,catalog['elements'][i])
+    return newlist
+#req4
+def dictionarymaker(artists, artworks):
+    copia=artworks
+    dictionary={}
+    Nationalities=[]
+    headers=['Title','DateAcquired','Medium','Dimensions']
+    for i in lt.iterator(artists):
+        if (i['Nationality'] not in dictionary.keys()) and i['Nationality'] != (''):
+            dictionary[i['Nationality']]=lt.newList('ARRAY_LIST',cmpfunction=0)
+            Nationalities.append(i['Nationality'])
+    for Artwork in lt.iterator(artworks):
+        characteristics=lt.newList('ARRAY_LIST',cmpfunction=0)
+        for Artist in lt.iterator(artists):
+            if (Artist['ConstituentID']==str(Artwork['ConstituentID']).replace('[','').replace(']','') and Artist['Nationality']!=''):
+                lt.addLast(dictionary[Artist['Nationality']],Artwork)
+    return dictionary,Nationalities
+def ArtByNation(dictionary,Nationalities):
+    newlist=lt.newList('ARRAY_LIST', cmpfunction=0)
+    for Nation in Nationalities:
+        dict=OrderedDict()
+        dict['Country']=Nation
+        dict['size']=lt.size(dictionary[Nation])
+        lt.addLast(newlist,dict)
+    return newlist
+def nationcmp(nation1,nation2):
+    return nation1['size']>nation2['size']
+def greatestlist(headers,dictionary,greatest,generalcatalog):
+    newlist=lt.newList('ARRAY_LIST', cmpfunction=0)
+    for i in lt.iterator(dictionary[greatest]):
+        dict=OrderedDict()
+        ID= i['ConstituentID'].replace('[','').replace(']','')
+        name=artistsearchbyID(ID, generalcatalog)
+        dict['Artist']=name
+        dict['Title']=i['Title']
+        dict['DateAcquired']=i['DateAcquired']
+        dict['Medium']=i['Medium']
+        dict['Dimensions']=i['Dimensions']
+        lt.addLast(newlist,dict)
     return newlist
 
 
