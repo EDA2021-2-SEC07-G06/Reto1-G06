@@ -22,6 +22,12 @@
 
 import config as cf
 import model
+from DISClib.Algorithms.Sorting import quicksort as qck
+from DISClib.Algorithms.Sorting import insertionsort as insrt
+from DISClib.Algorithms.Sorting import shellsort as shllsrt
+from DISClib.Algorithms.Sorting import mergesort as mrg
+from DISClib.ADT import list as lt
+from datetime import datetime
 import csv
 
 
@@ -49,7 +55,6 @@ def loadArtists(catalog):
     for Artist in input_file:
         model.addArtist(catalog, Artist)
 
-
 def loadArtworks(catalog):
     Artworksfile = cf.data_dir + 'Artworks-utf8-small.csv'
     input_file = csv.DictReader(open(Artworksfile, encoding='utf-8'))
@@ -59,13 +64,33 @@ def loadsublist(lst,pos,numelem):
     return model.sublist(lst,pos,numelem)
 def callcmp(artwork1,artwork2):
     return model.cmpArtworkByDateAcquired(artwork1,artwork2)
+def calldaterangecmp(artwork,start,end):
+    if start != ('') and end != ('') and artwork['DateAcquired'] != (''):
+        var= model.cmpdaterange(artwork,start,end)
+    else:
+        var=False
+    return var
+def calldaterangelist(catalog,cmp,start,end):
+    size=lt.size(catalog)
+    for i in range(0,size ):
+        condition1=start < (datetime.strptime(catalog['elements'][0]['DateAcquired'],'%Y-%m-%d' ))
+        condition2=end > datetime.strptime(catalog['elements'][size-1]['DateAcquired'],'%Y-%m-%d' )
+        if condition1 and condition2:
+            result=print('Rango de tiempo no valido')
+        elif (not condition1) and (not condition2):
+            result=model.daterangelist(catalog,cmp,start,end)
+    return result
+def cleanordlist(catalog):
+    return model.cleanordlist(catalog)
 
+def callshowlist(lst):
+    return 
 def sortlistinsertion(catalog,cmpfunction):
-    model.insertionsort(catalog,cmpfunction)
+    return insrt.sort(catalog,cmpfunction)
 def sortlistshell(catalog,cmpfunction):
-    model.shellsort(catalog,cmpfunction)
+    return shllsrt.sort(catalog,cmpfunction)
 def sortlistquick(catalog,cmpfunction):
-    model.quicksort(catalog,cmpfunction)
+    return qck.sort(catalog,cmpfunction)
 def sortlistmerge(catalog,cmpfunction):
     model.mergesort(catalog,cmpfunction)
 
