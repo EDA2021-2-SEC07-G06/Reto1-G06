@@ -97,6 +97,8 @@ def sortlistmerge(catalog,cmpfunction):
 def transferartworks(artworks, department):
     return model.transferartworks(artworks, department)
 
+def clasificarobrasartista(artists, artworks, nombre):
+    return model.clasificar_obras_artista_por_tecnica(artists, artworks, nombre)
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
