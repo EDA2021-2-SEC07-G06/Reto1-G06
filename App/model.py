@@ -110,6 +110,53 @@ def shellsort(lst, cmpfunction):
         h //= 3    # h se decrementa en un tercio
     return lst
 
+def clasificar_obras_artista_por_tecnica(artists, artworks, nombre):
+    totalobras=0
+    IDartista=""
+    medios=[]
+    for i in artists:
+        artist=artists[i]
+        if artist["DisplayName"] == nombre:
+            IDartista=artist["ConstituentID"]
+    
+    for j in artworks:
+        artwork=artworks[j]
+        if artwork["ConstituentID"]==IDartista:
+            totalobras+=1
+            medionuevo=True
+            for k in medios:
+                if artwork["Medium"]==medios[k]:
+                    medionuevo=False
+                    posiciondemedio=k
+            if medionuevo==True:
+                medioconfrecuencia=[artwork["Medium"],1]
+                medios.append(medioconfrecuencia)
+            else:
+                medios[posiciondemedio][1]+=1
+
+    mediomasfrecuente=[""]
+    frecuenciamediomasfrecuente=0
+    obras_tecnica_mas_usada=[]
+    for l in medios:
+        if medios[l][1]>frecuenciamediomasfrecuente:
+            frecuenciamediomasfrecuente=medios[i][0]
+            mediomasfrecuente=medios[l][1]
+
+    for m in artworks:
+        artwork=artworks[m]
+
+        if artwork["ConstituentID"]==IDartista and artwork["Medium"]==mediomasfrecuente:
+            Titulo=artwork["Title"]
+            Fecha=artwork["Date"]
+            Medio=artwork["Medium"]
+            Dimensiones=artwork["Dimensions"]
+            obra=[Titulo, Fecha, Medio, Dimensiones]
+            obras_tecnica_mas_usada.append(obra)
+    
+    totalnumerodemedios=int(len(medios))
+    return totalobras, totalnumerodemedios, mediomasfrecuente, obras_tecnica_mas_usada
+
+    
 def transferatworks(artworks, department):
     totalobrasatransferir=0
     costototal=0
