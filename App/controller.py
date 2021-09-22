@@ -70,7 +70,7 @@ def sortlistmerge(catalog,cmpfunction):
     model.mergesort(catalog,cmpfunction)
 
 def transferartworks(artworks, department):
-    model.transferartworks(artworks, department)
+    return model.transferartworks(artworks, department)
 
 # Funciones de ordenamiento
 
