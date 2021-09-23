@@ -34,13 +34,7 @@ import csv
 """
 El controlador se encarga de mediar entre la vista y el modelo.
 """
-
-# Inicialización del Catálogo del MOMA
-def initCatalogSingleLinked():
-    catalog = model.newCatalogSingleLinked()
-    return catalog
-
-def initCatalogArrayList():
+def initCatalog():
     catalog = model.newCatalogArrayList()
     return catalog
 # Funciones para la carga de datos
