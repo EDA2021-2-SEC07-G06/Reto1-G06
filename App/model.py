@@ -114,13 +114,11 @@ def clasificar_obras_artista_por_tecnica(artists, artworks, nombre):
     totalobras=0
     IDartista=""
     medios=[]
-    for i in artists:
-        artist=artists[i]
+    for artist in artists:
         if artist[1] == nombre:
             IDartista=artist[0]
     
-    for j in artworks:
-        artwork=artworks[j]
+    for artwork in artworks:
         if artwork[2]==IDartista:
             totalobras+=1
             medionuevo=True
@@ -142,7 +140,7 @@ def clasificar_obras_artista_por_tecnica(artists, artworks, nombre):
             frecuenciamediomasfrecuente=medios[i][0]
             mediomasfrecuente=medios[l][1]
 
-    for m in artworks:
+    for artwork in artworks:
         artwork=artworks[m]
 
         if artwork[2]==IDartista and artwork[5]==mediomasfrecuente:
@@ -164,8 +162,7 @@ def transferatworks(artworks, department):
     lista_mas_costosos=[]
     lista_mas_antiguos=[]
 
-    for i in artworks:
-        artwork=artworks[i]
+    for artwork in artworks:
         if artwork[9]==department:
             totalobrasatransferir+=1
             metroscuadrados=0

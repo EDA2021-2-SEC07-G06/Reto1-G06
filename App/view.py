@@ -46,7 +46,6 @@ def printMenu():
     print("7- Proponer una nueva exposicion en el museo")
 
 catalog = None
-
 """
 Menu principal
 """
