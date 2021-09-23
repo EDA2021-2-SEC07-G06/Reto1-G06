@@ -1,0 +1,18 @@
+Nombres: 
+Benjamín Muñoz Hurtado b.munoz@uniandes.edu.co 202021634
+Juan David Rueda jdruedat@uniandes.edu.co 201822988
+
+Analisis Complejidad:
+
+1: Complejidad O(3+ n*m) donde n es el tamaño de la lista result catalog y m es el tamaño de la lista headers.
+
+2: Para cmpArtworkByDateAcquired la complejidad es O(1), para cmpartworkrange la complejidad es O(1), para daterangelist la complejidad es O(n) donde n es el size, es decir el tamaño de la lista lst que se usa en la función, para cleanartworksordlist es O(n) donde n es el tamaño del catalogo, para artistsearchbyID es O(n) donde n es el numero de artistas y para adjustvalues es O(n*m) donde n es el tamaño de resultcatalog y m el tamaño de headers
+
+3. El orden de complejidad es O(n+m*l+m+l), donde n es el tamaño de artists, m el tamaño de artworks y l el tamaño de la lista medios.
+
+4. El orden de complejidad de dictionarymaker es O(n+m) donde n es el tamaño de artists y m es el tamaño de artworks. Para ArtByNation es O(n) donde n es el tamaño de nationalities, para nationcmp es O(1) y para greatestlist es O(n) donde n es el tamaño de dictionary[greatest]
+
+5: Complejidad O(n) donde n es el tamaño de la lista artworks 
+
+Requerimiento 3: Benjamín Muñoz Hurtado
+Requerimiento 4: Juan David Rueda
