@@ -78,6 +78,24 @@ while True:
         order=int(input('ingrese el tamaño de la muestra que desea'))
         subordlist=controller.loadsublist(ordlist,0,order)
         print(subordlist)
+    
+    elif int(inputs[0])==4:
+        nombre=input("Escribe el nombre del artista: \n")
+        artworks=catalog["Artworks"]
+        artists=catalog["Artists"]
+        resultados_funcion_opcion4=controller.clasificarobrasartista(artists, artworks, nombre)
+        Totalobras=resultados_funcion_opcion4[0]
+        Totaltecnicas=resultados_funcion_opcion4[1]
+        Tecnicamasutilizada=resultados_funcion_opcion4[2]
+        Lista_obras_con_tecnica=resultados_funcion_opcion4[3]
+
+        print(nombre + " has " + Totalobras + "pieces in his/her name \n" +
+        "There are " +Totaltecnicas + "different mediums/techniques in his/her work \n" +
+        "His/her most used technique is "+Tecnicamasutilizada +"\n")
+        "The items in his/her collection using "+Tecnicamasutilizada+" are: \n"
+        for i in Lista_obras_con_tecnica:
+            print(Lista_obras_con_tecnica[i]+"\n")
+
     elif int(inputs[0] == 6):
         departamento=input("Escoge el departamento del cual quiere transferir las obras.")
         artworklist=catalog["Artworks"]
