@@ -83,7 +83,7 @@ while True:
         maintable._max_width= {'DisplayName':20,'BeginDate':10,'EndDate':10,'Nationality':15,'Gender':10}
         for i in range(0,len(finallist)):
             maintable.add_row(finallist[i])
-        print('\nThere are'+ str(Artistcount) + 'artist born between' + str(startdate) + 'and' + str(enddate))
+        print('\nThere are '+ str(Artistcount) + ' artists born between ' + str(startdate) + ' and ' + str(enddate))
         print('The first and last 3 artists in range are...\n')
         print(maintable)
     elif int(inputs[0]) == 3:
@@ -111,7 +111,7 @@ while True:
         print('\n The MOMA acquired '+ str(len(adjustvalues)) +' unique pieces between '+ str(startdate) +' and '+ str(enddate)+'\n'+'With '+ str(Artistcount)+' different artists and purchased '+ str(purchases) + ' of them \n')
         print('the first and last 3 artworks in the range are: \n')
         print(maintable)
-    elif int(inputs[0])==4:
+    elif int(inputs[0])==5:
         artworkslist=catalog['Artworks']
         cmpfunction=controller.callnationcmp
         artistlist=catalog['Artists']
@@ -122,9 +122,9 @@ while True:
         Nationstable.field_names = ['Nationality','ArtWorks']
         Nationstable.align='l'
         Nationstable._max_width= {'Nationality':20,'ArtWorks':8}
-        print(ordlist['elements'][0])
         for Country in lt.iterator(ordlist):
             Nationstable.add_row([str(Country['Country']),str(Country['size'])])
+        print('The TOP 10 Countries in the MOMA are:\n')
         print(Nationstable)
         greatest=ordlist['elements'][0]['Country']
         greatesttable=PrettyTable()
@@ -134,9 +134,10 @@ while True:
         greatesttable._max_width= {'Artists':12,'Title':30,'DateAcquired':10,'Medium':20,'Dimensions':30}
         for i in lt.iterator(greatestlist):
             greatesttable.add_row([str(i['Artist']), str(i['Title']), str(i['DateAcquired']), str(i['Medium']), str(i['Dimensions'])])
+        print('The TOP nationality in the museum is '+  str(greatest)+ ' with ' + str(lt.size(greatestlist)) + ' unique pieces.')
+        print('The first and last 3 objects in the American artwork list are:')
         print(greatesttable.get_string(start=0, end=3))
         print(greatesttable.get_string(start=lt.size(greatestlist)-3, end=lt.size(greatestlist)))
-        print(greatesttable.get_string(start=1, end=4))
         
     else:
         sys.exit(0)

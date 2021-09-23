@@ -76,38 +76,36 @@ def daterangelist(lst,cmp,start,end):
     return newlist
 def cleanartworksordlist(catalog):
     newlist=lt.newList('ARRAY_LIST',cmpfunction=None)
-    for i in range(0,lt.size(catalog)):
-        if catalog['elements'][i]['DateAcquired']!=(''):
-            lt.addLast(newlist,catalog['elements'][i])
+    for item in lt.iterator(catalog):
+        if item['DateAcquired']!=(''):
+            lt.addLast(newlist,item)
     return newlist
 def artistsearchbyID(ID, generalcatalog):
     Name=''
-    for i in range (lt.size(generalcatalog['Artists'])):
-        if str(ID) == str(generalcatalog['Artists']['elements'][i]['ConstituentID']):
-            print(str(ID) == str(generalcatalog['Artists']['elements'][i]['ConstituentID']))
-            Name= str(generalcatalog['Artists']['elements'][i]['DisplayName'])
+    for artist in lt.iterator(generalcatalog['Artists']):
+        if str(ID) == str(artist['ConstituentID']):
+            Name= str(artist['DisplayName'])
             break
         else:
             Name= 'Not Found'
     return Name
 def adjustvalues(resultcatalog, headers,generalcatalog):
-    size=len(headers)
-    sizecatalog=lt.size(resultcatalog)
     mainlist=[]
     secondarylist=[]
     IDlist=[]
     Artistcount=0
     purchases=0
-    for item in range(0,sizecatalog):
-        ID=str(resultcatalog['elements'][item]['ConstituentID'])
+    for item in lt.iterator(resultcatalog):
+        ID=str(item['ConstituentID']).replace('[','').replace(']','')
         secondarylist.append(str(artistsearchbyID(ID,generalcatalog)))
+        print(ID)
         if ID not in IDlist:
             Artistcount += 1
         IDlist.append(ID)
-        if resultcatalog['elements'][item]['CreditLine']=='Purchase':
+        if item['CreditLine']=='Purchase':
             purchases+=1
-        for i in range (1,size):
-            secondarylist.append(resultcatalog['elements'][item][headers[i]])
+        for elemento in range(1,len(headers)):
+            secondarylist.append(item[headers[elemento]])
         mainlist.append(secondarylist)
         secondarylist=[]
     return mainlist, Artistcount,purchases
@@ -115,19 +113,17 @@ def adjustvalues(resultcatalog, headers,generalcatalog):
 def cmpartistrange(artist,start,end):
     return datetime.strptime(artist['BeginDate'],'%Y') >= start and datetime.strptime(artist['BeginDate'],'%Y')<=end
 def adjustartistvalues(resultcatalog, headers):
-    size=len(headers)
-    sizecatalog=lt.size(resultcatalog)
     mainlist=[]
     secondarylist=[]
     IDlist=[]
     Artistcount=0
-    for item in range(0,sizecatalog):
-        ID=str(resultcatalog['elements'][item]['ConstituentID'])
+    for item in lt.iterator(resultcatalog):
+        ID=str(item['ConstituentID'])
         if ID not in IDlist:
             Artistcount += 1
         IDlist.append(ID)
-        for i in range (0,size):
-            secondarylist.append(resultcatalog['elements'][item][headers[i]])
+        for elemento in headers:
+            secondarylist.append(item[elemento])
         mainlist.append(secondarylist)
         secondarylist=[]
     return mainlist, Artistcount
@@ -139,22 +135,19 @@ def cmpArtistByDateAcquired(artist1,artist2):
     return condition    
 def cleanartistordlist(catalog):
     newlist=lt.newList('ARRAY_LIST',cmpfunction=None)
-    for i in range(0,lt.size(catalog)):
-        if catalog['elements'][i]['BeginDate']!=('0'):
-            lt.addLast(newlist,catalog['elements'][i])
+    for i in lt.iterator(catalog):
+        if i['BeginDate']!=('0'):
+            lt.addLast(newlist,i)
     return newlist
 #req4
 def dictionarymaker(artists, artworks):
-    copia=artworks
     dictionary={}
     Nationalities=[]
-    headers=['Title','DateAcquired','Medium','Dimensions']
     for i in lt.iterator(artists):
         if (i['Nationality'] not in dictionary.keys()) and i['Nationality'] != (''):
             dictionary[i['Nationality']]=lt.newList('ARRAY_LIST',cmpfunction=0)
             Nationalities.append(i['Nationality'])
     for Artwork in lt.iterator(artworks):
-        characteristics=lt.newList('ARRAY_LIST',cmpfunction=0)
         for Artist in lt.iterator(artists):
             if (Artist['ConstituentID']==str(Artwork['ConstituentID']).replace('[','').replace(']','') and Artist['Nationality']!=''):
                 lt.addLast(dictionary[Artist['Nationality']],Artwork)

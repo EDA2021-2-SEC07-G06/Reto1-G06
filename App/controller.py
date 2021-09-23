@@ -96,7 +96,7 @@ def callartworkrangelist(catalog,cmp,start,end):
     condition2=end > datetime.strptime(catalog['elements'][size-1]['DateAcquired'],'%Y-%m-%d' )
     if condition1 and condition2:
         result=print('Invalid Range')
-    elif (not condition1) and (not condition2):
+    else:
         result=model.daterangelist(catalog,cmp,start,end)
     return result
 def callartworkscleanordlist(catalog):
