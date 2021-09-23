@@ -24,8 +24,7 @@
  * Dario Correal - Version inicial
  """
 
-
-from DISClib.DataStructures.arraylist import addFirst
+from collections import OrderedDict
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
@@ -74,22 +73,118 @@ def subList(lst, pos, numelem):
         return lt.subList(lst, pos, numelem)
     except Exception as exp:
         error.reraise(exp, 'List->subList: ')
-def cmpdaterange(artwork,start,end):
-    return datetime.strptime(artwork['DateAcquired'],'%Y-%m-%d')>start and datetime.strptime(artwork['DateAcquired'],'%Y-%m-%d')<end
+def cmpartworkrange(artwork,start,end):
+    return datetime.strptime(artwork['DateAcquired'],'%Y-%m-%d')>=start and datetime.strptime(artwork['DateAcquired'],'%Y-%m-%d')<=end
 def daterangelist(lst,cmp,start,end):
     size=lt.size(lst)
     newlist=lt.newList('ARRAY_LIST', cmpfunction=None)
     for i in range(0,size):
-        artwork=lt.getElement(lst,i)
-        if cmp(artwork,start,end):
-            lt.addFirst(newlist,artwork)
+        artist=lt.getElement(lst,i)
+        if cmp(artist,start,end):
+            lt.addLast(newlist,artist)
     return newlist
-def cleanordlist(catalog):
+def cleanartworksordlist(catalog):
     newlist=lt.newList('ARRAY_LIST',cmpfunction=None)
-    for i in range(0,lt.size(catalog)):
-        if catalog['elements'][i]['DateAcquired']!=(''):
-            lt.addLast(newlist,catalog['elements'][i])
+    for item in lt.iterator(catalog):
+        if item['DateAcquired']!=(''):
+            lt.addLast(newlist,item)
     return newlist
+def artistsearchbyID(ID, generalcatalog):
+    Name=''
+    for artist in lt.iterator(generalcatalog['Artists']):
+        if str(ID) == str(artist['ConstituentID']):
+            Name= str(artist['DisplayName'])
+            break
+        else:
+            Name= 'Not Found'
+    return Name
+def adjustvalues(resultcatalog, headers,generalcatalog):
+    mainlist=[]
+    secondarylist=[]
+    IDlist=[]
+    Artistcount=0
+    purchases=0
+    for item in lt.iterator(resultcatalog):
+        ID=str(item['ConstituentID']).replace('[','').replace(']','')
+        secondarylist.append(str(artistsearchbyID(ID,generalcatalog)))
+        print(ID)
+        if ID not in IDlist:
+            Artistcount += 1
+        IDlist.append(ID)
+        if item['CreditLine']=='Purchase':
+            purchases+=1
+        for elemento in range(1,len(headers)):
+            secondarylist.append(item[headers[elemento]])
+        mainlist.append(secondarylist)
+        secondarylist=[]
+    return mainlist, Artistcount,purchases
+#req 1
+def cmpartistrange(artist,start,end):
+    return datetime.strptime(artist['BeginDate'],'%Y') >= start and datetime.strptime(artist['BeginDate'],'%Y')<=end
+def adjustartistvalues(resultcatalog, headers):
+    mainlist=[]
+    secondarylist=[]
+    IDlist=[]
+    Artistcount=0
+    for item in lt.iterator(resultcatalog):
+        ID=str(item['ConstituentID'])
+        if ID not in IDlist:
+            Artistcount += 1
+        IDlist.append(ID)
+        for elemento in headers:
+            secondarylist.append(item[elemento])
+        mainlist.append(secondarylist)
+        secondarylist=[]
+    return mainlist, Artistcount
+def cmpArtistByDateAcquired(artist1,artist2):
+    if artist1['BeginDate'] !=str('0') and artist2['BeginDate'] !=str('0'):
+        condition= int(artist1['BeginDate']) < int(artist2['BeginDate'])
+    else:
+        condition=False
+    return condition    
+def cleanartistordlist(catalog):
+    newlist=lt.newList('ARRAY_LIST',cmpfunction=None)
+    for i in lt.iterator(catalog):
+        if i['BeginDate']!=('0'):
+            lt.addLast(newlist,i)
+    return newlist
+#req4
+def dictionarymaker(artists, artworks):
+    dictionary={}
+    Nationalities=[]
+    for i in lt.iterator(artists):
+        if (i['Nationality'] not in dictionary.keys()) and i['Nationality'] != (''):
+            dictionary[i['Nationality']]=lt.newList('ARRAY_LIST',cmpfunction=0)
+            Nationalities.append(i['Nationality'])
+    for Artwork in lt.iterator(artworks):
+        for Artist in lt.iterator(artists):
+            if (Artist['ConstituentID']==str(Artwork['ConstituentID']).replace('[','').replace(']','') and Artist['Nationality']!=''):
+                lt.addLast(dictionary[Artist['Nationality']],Artwork)
+    return dictionary,Nationalities
+def ArtByNation(dictionary,Nationalities):
+    newlist=lt.newList('ARRAY_LIST', cmpfunction=0)
+    for Nation in Nationalities:
+        dict=OrderedDict()
+        dict['Country']=Nation
+        dict['size']=lt.size(dictionary[Nation])
+        lt.addLast(newlist,dict)
+    return newlist
+def nationcmp(nation1,nation2):
+    return nation1['size']>nation2['size']
+def greatestlist(headers,dictionary,greatest,generalcatalog):
+    newlist=lt.newList('ARRAY_LIST', cmpfunction=0)
+    for i in lt.iterator(dictionary[greatest]):
+        dict=OrderedDict()
+        ID= i['ConstituentID'].replace('[','').replace(']','')
+        name=artistsearchbyID(ID, generalcatalog)
+        dict['Artist']=name
+        dict['Title']=i['Title']
+        dict['DateAcquired']=i['DateAcquired']
+        dict['Medium']=i['Medium']
+        dict['Dimensions']=i['Dimensions']
+        lt.addLast(newlist,dict)
+    return newlist
+
 
 def sort(lst, cmpfunction):
     quicksort(lst, 1, lt.size(lst), cmpfunction)
