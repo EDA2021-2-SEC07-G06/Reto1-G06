@@ -68,11 +68,6 @@ def cmpArtworkByDateAcquired(artwork1,artwork2):
     else:
         condition=False
     return condition
-def subList(lst, pos, numelem):
-    try:
-        return lt.subList(lst, pos, numelem)
-    except Exception as exp:
-        error.reraise(exp, 'List->subList: ')
 def cmpartworkrange(artwork,start,end):
     return datetime.strptime(artwork['DateAcquired'],'%Y-%m-%d')>=start and datetime.strptime(artwork['DateAcquired'],'%Y-%m-%d')<=end
 def daterangelist(lst,cmp,start,end):
@@ -154,7 +149,7 @@ def dictionarymaker(artists, artworks):
     Nationalities=[]
     for i in lt.iterator(artists):
         if (i['Nationality'] not in dictionary.keys()) and i['Nationality'] != (''):
-            dictionary[i['Nationality']]=lt.newList('ARRAY_LIST',cmpfunction=0)
+            dictionary[i['Nationality']]=lt.newList('ARRAY_LIST',cmpfunction=None)
             Nationalities.append(i['Nationality'])
     for Artwork in lt.iterator(artworks):
         for Artist in lt.iterator(artists):
@@ -162,7 +157,7 @@ def dictionarymaker(artists, artworks):
                 lt.addLast(dictionary[Artist['Nationality']],Artwork)
     return dictionary,Nationalities
 def ArtByNation(dictionary,Nationalities):
-    newlist=lt.newList('ARRAY_LIST', cmpfunction=0)
+    newlist=lt.newList('ARRAY_LIST', cmpfunction=None)
     for Nation in Nationalities:
         dict=OrderedDict()
         dict['Country']=Nation
@@ -172,7 +167,7 @@ def ArtByNation(dictionary,Nationalities):
 def nationcmp(nation1,nation2):
     return nation1['size']>nation2['size']
 def greatestlist(headers,dictionary,greatest,generalcatalog):
-    newlist=lt.newList('ARRAY_LIST', cmpfunction=0)
+    newlist=lt.newList('ARRAY_LIST', cmpfunction=None)
     for i in lt.iterator(dictionary[greatest]):
         dict=OrderedDict()
         ID= i['ConstituentID'].replace('[','').replace(']','')
@@ -232,8 +227,9 @@ def transferartworks(artworks, department):
     totalobrasatransferir=0
     costototal=0
     totalweight=0
-    lista_mas_costosos=[]
-    lista_mas_antiguos=[]
+    lista_mas_costosos=lt.newList('ARRAY_LIST', cmpfunction=None)
+    lista_mas_antiguos=lt.newList('ARRAY_LIST', cmpfunction=None)
+    dictcostosos=OrderedDict()
 
     for artwork in lt.iterator(artworks):
         if artwork['Department']==department:
@@ -244,6 +240,13 @@ def transferartworks(artworks, department):
             costopormetrocubico=0
             Weight=0
             costoporpeso=0
+            dictviejos=OrderedDict()
+            dictviejos['Title']=artwork['Title']
+            dictviejos['Classification']=artwork['Classification']
+            dictviejos['DateAcquired']=artwork['DateAcquired']
+            dictviejos['Medium']=artwork['Medium']
+            dictviejos['Dimensions']=artwork['Dimensions']
+            lt.addLast(lista_mas_antiguos, dictviejos)
             if  artwork['Width (cm)'] !=('') and artwork['Length (cm)'] != (''):
                 print('0')
                 length=float(artwork['Length (cm)'])
@@ -264,17 +267,10 @@ def transferartworks(artworks, department):
                 costoobra=max(costopormetrocuadrado, costopormetrocubico, costoporpeso)
             costototal+=costoobra
             totalweight+=Weight
-
-            for j in range(0,5):
-                if lista_mas_antiguos[j] == None or datetime.strptime(artwork["Date"], '%Y') < datetime.strptime(lista_mas_antiguos[j][3],'%Y'): #Usando comparacion fechas
-                    if j < 4:
-                        lista_mas_antiguos[j+1]=lista_mas_antiguos[j]
-                    lista_mas_antiguos[j]=[artwork['ObjectID'],artwork['Title'],artwork['Medium'],artwork['Date'],artwork['Dimensions'],artwork['Classification'],costoobra, artwork['URL']]
-                if lista_mas_costosos[j] == None or costoobra > lista_mas_costosos[j][7]: 
-                    if j < 4:
-                        lista_mas_costosos[j+1]=lista_mas_costosos[j]
-                    lista_mas_costosos[j]=[artwork['ObjectID'],artwork['Title'],artwork['Medium'],artwork['Date'],artwork['Dimensions'],artwork['Classification'],costoobra, artwork['URL']]
-
+            dictcostosos=OrderedDict()
+            dictcostosos['ObjectID']=artwork['ObjectID']
+            dictcostosos['Cost']=costoobra
+            lt.addLast(lista_mas_costosos,dictcostosos)
     return totalobrasatransferir, costototal, totalweight, lista_mas_antiguos, lista_mas_costosos
 # Funciones para creacion de datos
 

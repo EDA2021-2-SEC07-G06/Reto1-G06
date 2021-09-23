@@ -159,31 +159,16 @@ while True:
         resultados=controller.transferartworks(artworklist, departamento)
         listamascostosos=resultados[4]
         listamasantiguos=resultados[3]
+        sortcmp=controller.callcmp
+        ordlist1=controller.sortlistinsertion(listamasantiguos,sortcmp)
         print("The MoMA is going to transport 394 artifacts from the Drawings & Prints \n" +
          "REMEMBER!, NOT all MoMAs data is complete!!! These are estimates. \n" +
         "Estimated cargo weight (kg) :" + str(resultados[2]) +"\n"+
         "Estimated cargo cost (USD) :" + str(resultados[1]) +"\n"+
         "The TOP 5 most expensive items to transport are:"
-        + str(listamascostosos[0]) + "\n"
-        + str(listamascostosos[1]) + "\n"
-        + str(listamascostosos[2]) + "\n"
-        + str(listamascostosos[3]) + "\n"
-        + str(listamascostosos[4]) + "\n" +
-        "The TOP 5 oldest items to transport are:"
-        + str(listamasantiguos[0]) + "\n"
-        + str(listamasantiguos[1]) + "\n"
-        + str(listamasantiguos[2]) + "\n"
-        + str(listamasantiguos[3]) + "\n"
-        + str(listamasantiguos[4]))
-        artworkslist=catalog['Artworks']
-        sortcmp=controller.callcmp
-        ordlist=controller.sortlistinsertion(artworkslist,sortcmp)
-        cleanordlist=controller.cleanordlist(ordlist)
-        size=lt.size(cleanordlist)
-        startdate=str(input('Ingrese la fecha inicial '))
-        startdate=datetime.strptime(startdate,'%Y-%m-%d')
-        enddate=str(input('Ingrese la fecha final '))
-        enddate=datetime.strptime(enddate,'%Y-%m-%d')
+        "The TOP 5 oldest items to transport are:")
+
+        
         
     else:
         sys.exit(0)
