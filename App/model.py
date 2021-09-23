@@ -272,7 +272,7 @@ def transferartworks(artworks, department):
             dictcostosos['Cost']=costoobra
             lt.addLast(lista_mas_costosos,dictcostosos)
     return totalobrasatransferir, costototal, totalweight, lista_mas_antiguos, lista_mas_costosos
-# Funciones para creacion de datos
+    # Funciones para creacion de datos
 
 # Funciones de consulta
 
