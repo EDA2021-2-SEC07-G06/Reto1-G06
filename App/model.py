@@ -149,7 +149,7 @@ def cleanartistordlist(catalog):
             lt.addLast(newlist,i)
     return newlist
 #req4
-def dictionarymaker(artists, artworks):
+def n(artists, artworks):
     dictionary={}
     Nationalities=[]
     for i in lt.iterator(artists):
@@ -193,7 +193,7 @@ def clasificar_obras_artista_por_tecnica(artists, artworks, nombre):
         if artist["DisplayName"] == nombre:
             IDartista=artist["ConstituentID"]
     
-    for artwork in artworks:
+    for artwork in lt.iterator(artworks):
         if artwork["ConstituentID"]==IDartista:
             totalobras+=1
             medionuevo=True
@@ -215,7 +215,7 @@ def clasificar_obras_artista_por_tecnica(artists, artworks, nombre):
             frecuenciamediomasfrecuente=medios[l][0]
             mediomasfrecuente=medios[l][1]
 
-    for artwork in artworks:
+    for artwork in lt.iterator(artworks):
         if artwork["ConstituentID"]==IDartista and artwork["Medium"]==mediomasfrecuente:
             Titulo=artwork["Title"]
             Fecha=artwork["Date"]
