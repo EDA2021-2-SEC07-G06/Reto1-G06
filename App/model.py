@@ -147,7 +147,7 @@ def transferatworks(artworks, department):
             totalweight+=Weight
 
             for j in range(0,5):
-                if lista_mas_antiguos[j] == None or artwork["Date"] < lista_mas_antiguos[j][4]: #Usando comparacion fechas
+                if lista_mas_antiguos[j] == None or datetime.strptime(artwork["Date"], '%Y') < datetime.strptime(lista_mas_antiguos[j][4],'%Y'): #Usando comparacion fechas
                     if j < 4:
                         lista_mas_antiguos[j+1]=lista_mas_antiguos[j]
                     lista_mas_antiguos[j]=[artwork["ObjectID"],artwork["Title"],artwork["Medium"],artwork["Date"],artwork["Dimensions"],artwork["Classification"],costoobra, artwork["URL"]]
