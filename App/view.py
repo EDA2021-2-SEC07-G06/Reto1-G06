@@ -49,12 +49,11 @@ def printMenu():
     print("7- Proponer una nueva exposicion en el museo")
 
 catalog = None
-
+print('hola')
 """
 Menu principal
 """
 while True:
-    print('0')
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
