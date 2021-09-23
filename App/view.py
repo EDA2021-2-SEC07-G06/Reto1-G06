@@ -126,8 +126,50 @@ while True:
         startdate=datetime.strptime(startdate,'%Y-%m-%d')
         enddate=str(input('Ingrese la fecha final '))
         enddate=datetime.strptime(enddate,'%Y-%m-%d')
-        cmpfunction=controller.calldaterangecmp
-        rangelist=controller.calldaterangelist(cleanordlist,cmpfunction,startdate,enddate)
+    elif int(inputs[0])==5:
+        cmpfunction=controller.callartworkrangecmp
+        rangelist=controller.callartworkrangelist(ordlist,cmpfunction,startdate,enddate)
+        rangelist=controller.sortlistinsertion(rangelist,sortcmp)
+        header=['Artists','Title','DateAcquired','Medium','Dimensions']
+        adjustvalues,Artistcount,purchases=controller.calladjustvalues(rangelist, header, catalog)
+        finallist= adjustvalues[0:3] + adjustvalues[len(adjustvalues)-3:len(adjustvalues)]
+        maintable=PrettyTable()
+        maintable.field_names = ['Artists','Title','DateAcquired','Medium','Dimensions']
+        maintable.align='l'
+        maintable._max_width= {'Artists':12,'Title':30,'DateAcquired':10,'Medium':20,'Dimensions':30}
+        for i in range(0,len(finallist)):
+            maintable.add_row(finallist[i])
+        print('\n The MOMA acquired '+ str(len(adjustvalues)) +' unique pieces between '+ str(startdate) +' and '+ str(enddate)+'\n'+'With '+ str(Artistcount)+' different artists and purchased '+ str(purchases) + ' of them \n')
+        print('the first and last 3 artworks in the range are: \n')
+        print(maintable)
+    elif int(inputs[0])==5:
+        artworkslist=catalog['Artworks']
+        cmpfunction=controller.callnationcmp
+        artistlist=catalog['Artists']
+        dictionary,Nationalities=controller.calldictionarymaker( artistlist,artworkslist)
+        ArtbyNation=controller.callArtByNation(dictionary,Nationalities)
+        ordlist=controller.sortlistinsertion(ArtbyNation, cmpfunction)
+        Nationstable=PrettyTable()
+        Nationstable.field_names = ['Nationality','ArtWorks']
+        Nationstable.align='l'
+        Nationstable._max_width= {'Nationality':20,'ArtWorks':8}
+        for Country in lt.iterator(ordlist):
+            Nationstable.add_row([str(Country['Country']),str(Country['size'])])
+        print('The TOP 10 Countries in the MOMA are:\n')
+        print(Nationstable)
+        greatest=ordlist['elements'][0]['Country']
+        greatesttable=PrettyTable()
+        headers=['Title','DateAcquired','Medium','Dimensions']
+        greatestlist=controller.callgreatestlist(headers,dictionary,greatest,catalog)
+        greatesttable.field_names =['Artist','Title','DateAcquired','Medium','Dimensions']
+        greatesttable._max_width= {'Artists':12,'Title':30,'DateAcquired':10,'Medium':20,'Dimensions':30}
+        for i in lt.iterator(greatestlist):
+            greatesttable.add_row([str(i['Artist']), str(i['Title']), str(i['DateAcquired']), str(i['Medium']), str(i['Dimensions'])])
+        print('The TOP nationality in the museum is '+  str(greatest)+ ' with ' + str(lt.size(greatestlist)) + ' unique pieces.')
+        print('The first and last 3 objects in the American artwork list are:')
+        print(greatesttable.get_string(start=0, end=3))
+        print(greatesttable.get_string(start=lt.size(greatestlist)-3, end=lt.size(greatestlist)))
+        print('hola')
         
         for i in range(0,(lt.size(rangelist))):
             print(rangelist['elements'][i]['ObjectID'])
