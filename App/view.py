@@ -54,6 +54,7 @@ catalog = None
 Menu principal
 """
 while True:
+    print('0')
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
