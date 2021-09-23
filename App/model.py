@@ -116,20 +116,20 @@ def clasificar_obras_artista_por_tecnica(artists, artworks, nombre):
     medios=[]
     for i in artists:
         artist=artists[i]
-        if artist["DisplayName"] == nombre:
-            IDartista=artist["ConstituentID"]
+        if artist[1] == nombre:
+            IDartista=artist[0]
     
     for j in artworks:
         artwork=artworks[j]
-        if artwork["ConstituentID"]==IDartista:
+        if artwork[2]==IDartista:
             totalobras+=1
             medionuevo=True
             for k in medios:
-                if artwork["Medium"]==medios[k]:
+                if artwork[4]==medios[k]:
                     medionuevo=False
                     posiciondemedio=k
             if medionuevo==True:
-                medioconfrecuencia=[artwork["Medium"],1]
+                medioconfrecuencia=[artwork[4],1]
                 medios.append(medioconfrecuencia)
             else:
                 medios[posiciondemedio][1]+=1
@@ -145,11 +145,11 @@ def clasificar_obras_artista_por_tecnica(artists, artworks, nombre):
     for m in artworks:
         artwork=artworks[m]
 
-        if artwork["ConstituentID"]==IDartista and artwork["Medium"]==mediomasfrecuente:
-            Titulo=artwork["Title"]
-            Fecha=artwork["Date"]
-            Medio=artwork["Medium"]
-            Dimensiones=artwork["Dimensions"]
+        if artwork[2]==IDartista and artwork[5]==mediomasfrecuente:
+            Titulo=artwork[1]
+            Fecha=artwork[3]
+            Medio=artwork[4]
+            Dimensiones=artwork[5]
             obra=[Titulo, Fecha, Medio, Dimensiones]
             obras_tecnica_mas_usada.append(obra)
     
