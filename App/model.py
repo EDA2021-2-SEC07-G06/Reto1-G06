@@ -141,8 +141,6 @@ def clasificar_obras_artista_por_tecnica(artists, artworks, nombre):
             mediomasfrecuente=medios[l][1]
 
     for artwork in artworks:
-        artwork=artworks[m]
-
         if artwork[2]==IDartista and artwork[5]==mediomasfrecuente:
             Titulo=artwork[1]
             Fecha=artwork[3]

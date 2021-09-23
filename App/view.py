@@ -88,10 +88,10 @@ while True:
         Tecnicamasutilizada=resultados_funcion_opcion4[2]
         Lista_obras_con_tecnica=resultados_funcion_opcion4[3]
 
-        print(nombre + " has " + Totalobras + "pieces in his/her name \n" +
-        "There are " +Totaltecnicas + "different mediums/techniques in his/her work \n" +
-        "His/her most used technique is "+Tecnicamasutilizada +"\n")
-        "The items in his/her collection using "+Tecnicamasutilizada+" are: \n"
+        print(nombre + " has " + str(Totalobras) + " pieces in his/her name \n" +
+        "There are " +str(Totaltecnicas) + " different mediums/techniques in his/her work \n" +
+        "His/her most used technique is "+Tecnicamasutilizada[0] +"\n")
+        "The items in his/her collection using "+Tecnicamasutilizada[0]+" are: \n"
         for i in Lista_obras_con_tecnica:
             print(Lista_obras_con_tecnica[i]+"\n")
 
