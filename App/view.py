@@ -20,7 +20,6 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
-from tabulate import tabulate
 import config as cf
 import sys
 from datetime import datetime
