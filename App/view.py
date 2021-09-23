@@ -154,7 +154,7 @@ while True:
         print(greatesttable.get_string(start=0, end=3))
         print(greatesttable.get_string(start=lt.size(greatestlist)-3, end=lt.size(greatestlist)))
 
-    elif int(inputs[0] == 6):
+    elif int(inputs[0]) == 6:
         departamento=input("Escoge el departamento del cual quiere transferir las obras.")
         artworklist=catalog["Artworks"]
         resultados=controller.transferartworks(artworklist, departamento)
