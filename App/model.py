@@ -137,7 +137,7 @@ def clasificar_obras_artista_por_tecnica(artists, artworks, nombre):
     obras_tecnica_mas_usada=[]
     for l in medios:
         if medios[l][1]>frecuenciamediomasfrecuente:
-            frecuenciamediomasfrecuente=medios[i][0]
+            frecuenciamediomasfrecuente=medios[l][0]
             mediomasfrecuente=medios[l][1]
 
     for artwork in artworks:
