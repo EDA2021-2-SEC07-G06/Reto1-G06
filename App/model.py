@@ -166,7 +166,7 @@ def transferatworks(artworks, department):
 
     for i in artworks:
         artwork=artworks[i]
-        if artwork["Department"]==department:
+        if artwork[9]==department:
             totalobrasatransferir+=1
             metroscuadrados=0
             metroscubicos=0
@@ -174,17 +174,17 @@ def transferatworks(artworks, department):
             costopormetrocubico=0
             Weight=0
             costoporpeso=0
-            if  artwork["Diameter (cm)"] != None and artwork["Length (cm)"] != None:
-                length=float(artwork["Length (cm)"])
-                diameter=float(artwork["Depth (cm)"])
-                metroscuadrados=(length*diameter)/(10**2)
+            if  artwork[19] != None and artwork[17] != None:
+                length=float(artwork[17])
+                width=float(artwork[19])
+                metroscuadrados=(length*width)/(10**2)
                 costopormetrocuadrado=(72*metroscuadrados)
-                if artwork["Depth (cm)"] != None:
-                    depth=float(artwork["Depth (cm)"])
-                    metroscubicos=(length*diameter*depth)/(10**3)
+                if artwork[15] != None:
+                    height=float(artwork[15])
+                    metroscubicos=(length*width*height)/(10**3)
                     costopormetrocubico=72*metroscubicos
-            if artwork["Weight (kg)"] != None:
-                Weight=float(artwork["Weight (kg)"])
+            if artwork[18] != None:
+                Weight=float(artwork[18])
                 costoporpeso=72*Weight
             if costopormetrocuadrado == 0 and costopormetrocubico == 0 and costoporpeso == 0:
                 costoobra=48
@@ -197,11 +197,11 @@ def transferatworks(artworks, department):
                 if lista_mas_antiguos[j] == None or artwork["Date"] < lista_mas_antiguos[j][4]: #Usando comparacion fechas
                     if j < 4:
                         lista_mas_antiguos[j+1]=lista_mas_antiguos[j]
-                    lista_mas_antiguos[j]=[artwork["ObjectID"],artwork["Title"],artwork["Medium"],artwork["Date"],artwork["Dimensions"],artwork["Classification"],costoobra, artwork["URL"]]
+                    lista_mas_antiguos[j]=[artwork[0],artwork[1],artwork[4],artwork[3],artwork[5],artwork[8],costoobra, artwork[12]]
                 if lista_mas_costosos[j] == None or costoobra > lista_mas_costosos[j][7]: 
                     if j < 4:
                         lista_mas_costosos[j+1]=lista_mas_costosos[j]
-                    lista_mas_costosos[j]=[artwork["ObjectID"],artwork["Title"],artwork["Medium"],artwork["Date"],artwork["Dimensions"],artwork["Classification"],costoobra, artwork["URL"]]
+                    lista_mas_costosos[j]=lista_mas_antiguos[j]=[artwork[0],artwork[1],artwork[4],artwork[3],artwork[5],artwork[8],costoobra, artwork[12]]
 
     return totalobrasatransferir, costototal, totalweight, lista_mas_antiguos, lista_mas_costosos
 # Funciones para creacion de datos
