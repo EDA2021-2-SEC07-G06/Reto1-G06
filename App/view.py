@@ -1,4 +1,4 @@
-﻿﻿"""
+﻿"""
  * Copyright 2020, Departamento de sistemas y Computación, Universidad
  * de Los Andes
  *
@@ -136,7 +136,6 @@ while True:
         print('The first and last 3 objects in the American artwork list are:')
         print(greatesttable.get_string(start=0, end=3))
         print(greatesttable.get_string(start=lt.size(greatestlist)-3, end=lt.size(greatestlist)))
-        print('hola')
         
     else:
         sys.exit(0)
