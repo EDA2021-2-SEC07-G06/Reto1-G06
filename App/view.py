@@ -109,6 +109,24 @@ while True:
         print('\n The MOMA acquired '+ str(len(adjustvalues)) +' unique pieces between '+ str(startdate) +' and '+ str(enddate)+'\n'+'With '+ str(Artistcount)+' different artists and purchased '+ str(purchases) + ' of them \n')
         print('the first and last 3 artworks in the range are: \n')
         print(maintable)
+    
+    elif int(inputs[0])==4:
+        nombre=input("Escribe el nombre del artista: \n")
+        artworks=catalog["Artworks"]
+        artists=catalog["Artists"]
+        resultados_funcion_opcion4=controller.clasificarobrasartista(artists, artworks, nombre)
+        Totalobras=resultados_funcion_opcion4[0]
+        Totaltecnicas=resultados_funcion_opcion4[1]
+        Tecnicamasutilizada=resultados_funcion_opcion4[2]
+        Lista_obras_con_tecnica=resultados_funcion_opcion4[3]
+
+        print(nombre + " has " + str(Totalobras) + " pieces in his/her name \n" +
+        "There are " +str(Totaltecnicas) + " different mediums/techniques in his/her work \n" +
+        "His/her most used technique is "+Tecnicamasutilizada[0] +"\n")
+        "The items in his/her collection using "+Tecnicamasutilizada[0]+" are: \n"
+        for i in Lista_obras_con_tecnica:
+            print(Lista_obras_con_tecnica[i]+"\n")
+
     elif int(inputs[0])==5:
         artworkslist=catalog['Artworks']
         cmpfunction=controller.callnationcmp
@@ -136,6 +154,38 @@ while True:
         print('The first and last 3 objects in the American artwork list are:')
         print(greatesttable.get_string(start=0, end=3))
         print(greatesttable.get_string(start=lt.size(greatestlist)-3, end=lt.size(greatestlist)))
+
+    elif int(inputs[0] == 6):
+        departamento=input("Escoge el departamento del cual quiere transferir las obras.")
+        artworklist=catalog["Artworks"]
+        resultados=controller.transferartworks(artworklist, departamento)
+        listamascostosos=resultados[4]
+        listamasantiguos=resultados[3]
+        print("The MoMA is going to transport 394 artifacts from the Drawings & Prints \n" +
+         "REMEMBER!, NOT all MoMAs data is complete!!! These are estimates. \n" +
+        "Estimated cargo weight (kg) :" + str(resultados[2]) +"\n"+
+        "Estimated cargo cost (USD) :" + str(resultados[1]) +"\n"+
+        "The TOP 5 most expensive items to transport are:"
+        + str(listamascostosos[0]) + "\n"
+        + str(listamascostosos[1]) + "\n"
+        + str(listamascostosos[2]) + "\n"
+        + str(listamascostosos[3]) + "\n"
+        + str(listamascostosos[4]) + "\n" +
+        "The TOP 5 oldest items to transport are:"
+        + str(listamasantiguos[0]) + "\n"
+        + str(listamasantiguos[1]) + "\n"
+        + str(listamasantiguos[2]) + "\n"
+        + str(listamasantiguos[3]) + "\n"
+        + str(listamasantiguos[4]))
+        artworkslist=catalog['Artworks']
+        sortcmp=controller.callcmp
+        ordlist=controller.sortlistinsertion(artworkslist,sortcmp)
+        cleanordlist=controller.cleanordlist(ordlist)
+        size=lt.size(cleanordlist)
+        startdate=str(input('Ingrese la fecha inicial '))
+        startdate=datetime.strptime(startdate,'%Y-%m-%d')
+        enddate=str(input('Ingrese la fecha final '))
+        enddate=datetime.strptime(enddate,'%Y-%m-%d')
         
     else:
         sys.exit(0)
